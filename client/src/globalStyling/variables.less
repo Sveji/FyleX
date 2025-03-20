@@ -15,9 +15,12 @@
 
 
     // COLORS
+    --primary-tint-70: #DACDDC;
+    --primary-tint-40: #A381A6;
     --primary-tint-30: #916895;
     --primary-tint-20: #916895;
     --primary: #591C60;
+    --primary-shade-10: #2E0035;
 
 }
 
@@ -34,12 +37,19 @@
 
 
 // TYPOGRAPHY
-html, body, #root {
+html,
+body,
+#root {
     font-family: @font-primary;
     background-color: #000000;
+    color: #DACDDC;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
     color: var(--primary-tint-30);
     font-family: @font-primary;
 }
@@ -50,4 +60,5 @@ h1 {
 
 p {
     font-family: @font-primary;
+    font-size: 1.6rem;
 }
