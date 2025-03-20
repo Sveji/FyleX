@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 // FONTS
-@font-primary: sans-serif;
+@font-primary: "Mulish";
 @font-secondary: sans-serif;
 
 
@@ -10,6 +12,13 @@
     --grid-gutter: 2.4rem;
     --grid-columns: 12;
     --grid-column-width: calc(calc(100vw - calc(calc(var(--grid-columns) - 1) * var(--grid-gutter)) - calc(var(--grid-padding) * 2)) / var(--grid-columns));
+
+
+    // COLORS
+    --primary-tint-30: #916895;
+    --primary-tint-20: #916895;
+    --primary: #591C60;
+
 }
 
 
@@ -21,3 +30,24 @@
 @3colIn: calc(var(--grid-padding) + calc(calc(var(--grid-column-width) + var(--grid-gutter)) * 3));
 @4colIn: calc(var(--grid-padding) + calc(calc(var(--grid-column-width) + var(--grid-gutter)) * 4));
 @5colIn: calc(var(--grid-padding) + calc(calc(var(--grid-column-width) + var(--grid-gutter)) * 5));
+
+
+
+// TYPOGRAPHY
+html, body, #root {
+    font-family: @font-primary;
+    background-color: #000000;
+}
+
+h1, h2, h3, h4, h5 {
+    color: var(--primary-tint-30);
+    font-family: @font-primary;
+}
+
+h1 {
+    font-size: 4.8rem;
+}
+
+p {
+    font-family: @font-primary;
+}
