@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import DataProvider from "./context/DataContext"
 import LayoutGrid from "./components/LayoutGrid/LayoutGrid"
+import Main from "./pages/Main/Main"
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
 
         <Routes>
 
-
+          <Route path="/" element={<Main />} />
 
         </Routes>
 
