@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import upload_document
+from .views import document
 
 urlpatterns = [
-    path('', upload_document, name = "upload_document")
+    path('', document, name = "upload_document"),
+    path('<int:id>/', document, name = "delete_document"),
 ]
