@@ -1,0 +1,83 @@
+@import url('../../globalStyling/variables.less');
+
+
+.assistant-box {
+    padding: 4.8rem 3.2rem;
+    border-radius: 3rem;
+    box-shadow: 0 0 3.2rem rgba(181, 154, 184, 0.25);
+    height: 80rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4.8rem;
+    flex-grow: 1;
+
+    .title-box {
+        border-bottom: solid 0.1rem var(--primary-tint-10);
+    }
+
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2.4rem;
+        flex-grow: 1;
+        overflow: auto;
+        
+        
+        .messages-container {
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+
+            .no-more {
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                color: var(--primary-tint-20);
+                margin-bottom: 2.4rem;
+
+                .line {
+                    flex-grow: 1;
+                    border-bottom: solid 0.1rem var(--primary-tint-20);
+                }
+            }
+        }
+
+
+        .input-container {
+            position: relative;
+
+            input {
+                background-color: var(--primary-shade-20);
+                font-family: inherit;
+                font-size: 1.4rem;
+                border: none;
+                border-radius: 5rem;
+                padding: 1.6rem 1.6rem;
+                width: 100%;
+
+                color: var(--primary-tint-50);
+
+                &::placeholder {
+                    color: var(--primary-tint-20);
+                }
+            }
+
+            .send-btn {
+                position: absolute;
+                top: 50%;
+                right: 0.8rem;
+                transform: translateY(-50%);
+                background-color: var(--primary-tint-40);
+                border: none;
+                border-radius: 5rem;
+                padding: 0.4rem 1.2rem;
+                cursor: pointer;
+
+                .icon {
+                    width: 2.4rem;
+                    height: 2.4rem;
+                }
+            }
+        }
+    }
+}
