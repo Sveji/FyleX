@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'user',
     'document',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,14 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+ASGI_APPLICATION = "server.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 ROOT_URLCONF = 'server.urls'
 
