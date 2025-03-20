@@ -1,19 +1,14 @@
 @import url('../../globalStyling/variables.less');
+@import url('../../globalStyling/components.less');
 
 
 .assistant-box {
-    padding: 4.8rem 3.2rem;
-    border-radius: 3rem;
-    box-shadow: 0 0 3.2rem rgba(181, 154, 184, 0.25);
+    .card();
     height: 80rem;
     display: flex;
     flex-direction: column;
     gap: 4.8rem;
     flex-grow: 1;
-
-    .title-box {
-        border-bottom: solid 0.1rem var(--primary-tint-10);
-    }
 
     .chat-container {
         display: flex;
