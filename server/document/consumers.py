@@ -79,6 +79,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.channel_layer.group_add(f"document_{chat_name}", self.channel_name)
 
+        self.group_name = f"document_{chat_name}"
+
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -86,7 +88,21 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_discard(group_name, self.channel_name)
 
     async def receive(self, text_data):
-        pass
+        data = json.loads(text_data)
+        action = data.get("action")
+
+        if action == "send_message":
+            message = data.get("message")
+
+            #run vasi model
+
+            await self.channel_layer.group_send(
+                self.group_name,
+                {
+                    "type": "send_message_notification",
+                    "message": message,
+                },
+            )
 
     @database_sync_to_async
     def get_document(self, document_id):
@@ -108,3 +124,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         return result
 
+    async def send_message_notification(self, event):
+        await self.send(text_data=json.dumps({
+            "action": "succses",
+            "message": event["message"],
+        }))
