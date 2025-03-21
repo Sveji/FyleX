@@ -111,21 +111,17 @@ def get_summary(request):
         except Document.DoesNotExist:
             return Response("Error no object found!", status=status.HTTP_400_BAD_REQUEST)
         
-        url = ''
+        url = 'http://127.0.0.1:7000/api/service/summary'
 
         data = {
-            "document_url": document.document,
+            "url": document.document,
         }
 
-        headers = {
-            "Content-Type": "application/json",
-        }
-
-        response = requests.post(url, json = data, headers = headers)
+        response = requests.post(url, json = data)
 
         if response.status_code == 200:
             response_data = response.json()
-            summary = response_data.get('summary')
+            summary = response_data.get('summary_text')
 
         try:
             document.summary = summary
