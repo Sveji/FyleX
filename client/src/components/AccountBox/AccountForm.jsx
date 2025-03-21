@@ -46,6 +46,12 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
                 <button className="btn" type='submit'>{btn}</button>
             </form>
 
+            <div className="or-box">
+                <div className="line"></div>
+                <p>or</p>
+                <div className="line"></div>
+            </div>
+
             <div className="redirect-text">
                 <p>{link.text}</p>
                 <Link className="link" to={link.route}><p className="bold">{link.label}</p></Link>
