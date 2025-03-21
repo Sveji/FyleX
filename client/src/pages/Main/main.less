@@ -34,11 +34,16 @@
 
         .sub-title {
             display: flex;
+            align-items: center;
 
             gap: 0.4rem;
 
             .login {
                 color: var(--primary-tint-20);
+                text-decoration: none;
+                font-size: 1.6rem;
+                font-weight: bold;
+                cursor: pointer;
             }
         }
 
@@ -50,7 +55,7 @@
 
 .scan-section {
     // height: 40rem;
-    width: 100vw;
+    width: 100%;
     // border: 0.2rem solid red;
     padding: 2rem;
     z-index: 1;
@@ -88,6 +93,8 @@
 
             .inside {
                 gap: 1.6rem;
+                display: flex;
+                flex-direction: column;
 
                 .text {
                     display: flex;

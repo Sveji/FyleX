@@ -2,13 +2,11 @@ import { useState } from "react"
 import ReactModal from "react-modal"
 import { IoClose } from "react-icons/io5";
 
-const PopUp = ({ children, classes }) => {
-    const [shown, setShown] = useState(true)
-
+const PopUp = ({ children, classes, shown, onClose }) => {
     return (
         <ReactModal
             isOpen={shown}
-            onRequestClose={() => setShown(false)}
+            onRequestClose={onClose}
             overlayClassName="screen-overlay"
             closeTimeoutMS={300}
             className={{
@@ -18,7 +16,7 @@ const PopUp = ({ children, classes }) => {
         >
             {children}
 
-            <IoClose onClick={() => setShown(false)} className="pop-up-icon" />
+            <IoClose onClick={onClose} className="pop-up-icon" />
         </ReactModal>
     )
 }

@@ -3,6 +3,10 @@ import DataProvider from "./context/DataContext"
 import LayoutGrid from "./components/LayoutGrid/LayoutGrid"
 import Main from "./pages/Main/Main"
 import YourDocuments from "./pages/YourDocuments/YourDocuments"
+import Login from "./pages/Login/Login"
+import Register from "./pages/Register/Register"
+import ActivateMessage from "./pages/ActivateMessage/ActivateMessage"
+import Activate from "./pages/Activate/Activate"
 
 function App() {
 
@@ -16,7 +20,6 @@ function App() {
         <Routes>
 
           <Route path="/" element={<Main />} />
-          <Route path="/mydocuments" element={<YourDocuments />} />
 
         </Routes>
 
