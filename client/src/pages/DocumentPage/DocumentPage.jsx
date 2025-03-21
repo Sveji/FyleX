@@ -5,6 +5,7 @@ import AnalysisBox from "../../components/AnalysisBox/AnalysisBox"
 import Highlight from "../Highlight/Highlight"
 import AssistantBox from "../../components/AssistantBox/AssistantBox"
 import './documentPage.less'
+import Documents from '../YourDocuments/Documents'
 
 const DocumentPage = () => {
     // Gets global data from the context
@@ -72,15 +73,25 @@ const DocumentPage = () => {
 
     return (
         <div className="result-container">
-            <AnalysisBox
-                sentences={analysis}
-            />
-            <AssistantBox />
-
             <div className="document-box">
-                <button onClick={() => handleSummarize()} className="btn">Summarize</button>
+                <div className="btn-container">
+                    <Documents />
+                    <button onClick={() => handleSummarize()} className="btn">Summarize</button>
+                </div>
+
                 {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
             </div>
+
+            <div className="boxes">
+                <AnalysisBox
+                    sentences={analysis}
+                />
+                <AssistantBox />
+            </div>
+
+
+
+
         </div>
     )
 }

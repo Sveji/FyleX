@@ -128,14 +128,14 @@ def get_summary(request):
         user = request.user
 
         document_id = request.query_params.get('document_id')
-        if document.user.id != user.id:
-            return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
 
         if not document_id:
             return Response("Error no id given!", status=status.HTTP_400_BAD_REQUEST)
         
         try:
             document = Document.objects.get(id = document_id)
+            if document.user.id != user.id:
+                return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
         except Document.DoesNotExist:
             return Response("Error no object found!", status=status.HTTP_400_BAD_REQUEST)
         
@@ -145,21 +145,28 @@ def get_summary(request):
             "url": document.document,
         }
 
-        response = requests.post(url, json = data)
+        try:
+            response = requests.post(url, json=data, timeout=10)  
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            return Response({"error": f"Failed to reach the summary service: {str(e)}"}, status=status.HTTP_502_BAD_GATEWAY)
 
-        if response.status_code == 200:
+        try:
             response_data = response.json()
-            summary = response_data.get('summary_text')
-        else:
-            return Response("Starus code error!", status=status.HTTP_400_BAD_REQUEST)
+        except ValueError:
+            return Response({"error": "Invalid response format from summary service!"}, status=status.HTTP_502_BAD_GATEWAY)
+
+        summary = response_data.get("summary_text")
+        if not summary:
+            return Response({"error": "Summary text missing in response!"}, status=status.HTTP_502_BAD_GATEWAY)
 
         try:
             document.summary = summary
             document.save()
-        except:
-            return Response("Error with the save!", status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": f"Failed to save summary: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        return Response(response)
+        return Response({"message": "Summary retrieved successfully!", "summary": summary}, status=status.HTTP_200_OK)
     
 @api_view(['GET'])
 def get_review(request):
