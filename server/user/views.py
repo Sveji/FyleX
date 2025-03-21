@@ -14,6 +14,11 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 
 def get_tokens_for_user(user):
+
+    """
+    Generates token for the login and adds the username in it.
+    """
+
     refresh = RefreshToken.for_user(user)
     refresh['username'] = user.username
     return {
@@ -41,6 +46,11 @@ def send_activation_email(user, request):
 
 @api_view(['POST'])
 def register(request):
+
+    """
+    register view
+    """
+
     username = request.data.get('username')
     email = request.data.get('email')
     password = request.data.get('password')
@@ -79,6 +89,11 @@ def register(request):
 
 @api_view(['POST'])
 def login(request):
+
+    """
+    login view
+    """
+
     email = request.data.get('email')
     password = request.data.get('password')
 

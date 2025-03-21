@@ -5,7 +5,7 @@ import cloudinary
 import cloudinary.uploader
 from rest_framework import status
 from .models import Document
-from rest_framework.permissions import IsAuthenticated;
+from rest_framework.permissions import IsAuthenticated
 import requests
 import cloudinary.uploader
 
