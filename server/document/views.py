@@ -23,6 +23,10 @@ def document(request):
     if request.method == 'POST':
         document = request.FILES.get('document')
         user = request.user
+        name = request.data.get('name')
+
+        if not name:
+            return Response("Error, there is no name!", status=status.HTTP_404_NOT_FOUND)
 
         if not document:
             return Response("Error there is no document!", status=status.HTTP_404_NOT_FOUND)
@@ -59,12 +63,14 @@ def document(request):
             document = document_url,
             analysis = response_data,
             user = user,
+            name = name,
         )
 
         return Response({
             "id": document_object.id,
             "document_url": document_url,
             "analysis": document_object.analysis,
+            "name": document_object.name,
         }, status=status.HTTP_200_OK)
     
     if request.method == 'DELETE':
@@ -72,6 +78,10 @@ def document(request):
 
         try:
             document_object = Document.objects.get(id = document_id)
+
+            user = request.user
+            if document_object.user.id != user.id:
+                return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
 
             document_id = get_public_id(document_object.document)
 
@@ -85,27 +95,38 @@ def document(request):
 
     if request.method == 'GET':
         document_id = request.query_params.get('id')
-        
+        user = request.user
+
         if not document_id:
-            documents = Document.objects.values('id', 'document', 'analysis', 'summary', 'review')
+            documents = Document.objects.values('id', 'document', 'analysis', 'summary', 'review', "user_id", "name").filter(user = user.id)
             return Response(list(documents), status=status.HTTP_200_OK)
         
         else:
             document = Document.objects.get(id = document_id)
             
+            if document.user.id != user.id:
+                return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
+
             return Response({
                 "id": document.id,
                 "document": document.document,
                 "analysis": document.analysis,
                 "summary": document.summary,
                 "review": document.review,
+                "user_id": user.id,
+                "name": document.name,
             })
         
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_summary(request):
     if request.method == 'GET':
         
+        user = request.user
+
         document_id = request.query_params.get('document_id')
+        if document.user.id != user.id:
+            return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
 
         if not document_id:
             return Response("Error no id given!", status=status.HTTP_400_BAD_REQUEST)
@@ -140,7 +161,11 @@ def get_summary(request):
 @api_view(['GET'])
 def get_review(request):
 
+    user = request.user
+
     document_id = request.query_params.get("document_id")
+    if document.user.id != user.id:
+        return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
 
     if not document_id:
         return Response("Error no document_id!", status=status.HTTP_404_NOT_FOUND)

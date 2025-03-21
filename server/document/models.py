@@ -7,4 +7,5 @@ class Document(models.Model):
     analysis = models.JSONField(default = [])
     review = models.TextField(max_length=10000, default="")
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user")
+    name = models.CharField(max_length=256, default="")
 
