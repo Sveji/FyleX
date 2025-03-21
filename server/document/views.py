@@ -37,32 +37,33 @@ def document(request):
         
         document_url = upload_result['secure_url']
 
-        url = ''
+        url = 'http://127.0.0.1:7000/api/service/analysis'
 
         data = {
-            "document_url": document.document,
+            "url": str(document_url),
         }
 
         headers = {
             "Content-Type": "application/json",
         }
 
-        response = requests.post(url, json = data, headers = headers)
+        response = requests.post(url, json = data)
 
+        print(response.status_code)
         if response.status_code == 200:
             response_data = response.json()
-            analysis = response_data.get('analysis')
         else:
             return Response("Not the correct status code!", status=status.HTTP_400_BAD_REQUEST)
 
         document_object = Document.objects.create(
             document = document_url,
-            analysis = analysis,
+            analysis = response_data,
         )
 
         return Response({
             "id": document_object.id,
-            "image_url": document_url
+            "image_url": document_url,
+            "analysis": document_object.analysis,
         }, status=status.HTTP_200_OK)
     
     if request.method == 'DELETE':

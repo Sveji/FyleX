@@ -9,6 +9,7 @@ import Activate from "./pages/Activate/Activate"
 import Highlight from "./pages/Highlight/Highlight"
 import EmailMessage from "./components/EmailMessage/EmailMessage"
 import ForgotPass from "./pages/ForgotPass/ForgotPass"
+import Nav from "./pages/Nav/Nav"
 
 function App() {
 
@@ -18,6 +19,9 @@ function App() {
       <DataProvider>
 
         <LayoutGrid type='screen' />
+
+        <Nav />
+
 
         <Routes>
 
