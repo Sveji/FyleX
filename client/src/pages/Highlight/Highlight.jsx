@@ -42,10 +42,16 @@ export default function PDFView({ pdfUrl, keywords = [] }) {
         }
     }, [documentLoad, highlightedText]);
 
+    // const styles = StyleSheet.create({
+    //     page: { backgroundColor: 'tomato' },
+    //     section: { color: 'white', textAlign: 'center', margin: 30 }
+    // });
+
     return (
         <div className="border-solid border-2 rounded-md border-slate-300 h-screen w-auto overflow-auto overscroll-contain">
-            <Worker workerUrl={workerUrl}>
+            <Worker workerUrl={workerUrl} style={styles.page}>
                 <Viewer
+                    style={styles.section}
                     fileUrl={pdfUrl}
                     onDocumentLoad={handleDocumentLoad}
                     plugins={[searchPluginInstance]}
