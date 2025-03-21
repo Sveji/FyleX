@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
 import ActivateMessage from "./pages/ActivateMessage/ActivateMessage"
 import Activate from "./pages/Activate/Activate"
+import Highlight from "./pages/Highlight/Highlight"
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
         <Routes>
 
           <Route path="/" element={<Main />} />
+          <Route path="/highlight" element={<Highlight />} />
+
 
         </Routes>
 
