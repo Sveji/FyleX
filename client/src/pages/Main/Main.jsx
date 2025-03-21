@@ -38,6 +38,7 @@ const Main = () => {
         console.log(response)
 
         if (response.status == 401) navigate('/login')
+        if(response.status == 200) navigate(`/document/${response.data.id}`)
 
     }
 
