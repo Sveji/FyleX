@@ -7,10 +7,11 @@ import AssistantBox from "../../components/AssistantBox/AssistantBox"
 import './documentPage.less'
 import Documents from '../YourDocuments/Documents'
 import Wave from '../../img/wave.svg'
+import { LuFileText } from "react-icons/lu"
 
 const DocumentPage = () => {
     // Gets global data from the context
-    const { crud, access } = useContext(DataContext)
+    const { crud, access, navigate } = useContext(DataContext)
 
 
 
@@ -113,7 +114,15 @@ const DocumentPage = () => {
                 <div className="documents-container">
                     <div className="document-box">
                         <div className="title-box">
-                            <Documents document={document} />
+                            <div className="file-container" onClick={() => navigate(`/document/${document.id}`)}>
+                                <div className="file">
+                                    <LuFileText className="icon" size={32} color={"#000000"} fill={"#7E4F83"} />
+                                    <div className="file-title">
+                                        <p className="title">{document.name}</p>
+                                    </div>
+                                </div>
+                
+                            </div>
                             <button onClick={handleSummarize} className="btn">Summarize</button>
                         </div>
 

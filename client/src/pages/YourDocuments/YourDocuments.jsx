@@ -36,6 +36,23 @@ const YourDocuments = () => {
 
 
 
+    // Deletes a document from a user's profile
+    const handleDeleteDocument = async (docId) => {
+        const response = await crud({
+            url: `/api/document/?id=${docId}`,
+            method: 'delete'
+        })
+
+        console.log(response)
+
+        if(response.status == 200) {
+            const newDocs = documents.filter(doc => doc.id !== docId)
+            setDocuments(newDocs)
+        }
+    }
+
+
+
     return (
         <>
             <img src={Wave} className='wave' />
@@ -50,7 +67,7 @@ const YourDocuments = () => {
                     {
                         documents.length > 0 &&
                         documents.map((document, i) => (
-                            <Documents document={document} key={i} />
+                            <Documents deleteFunc={() => handleDeleteDocument(document.id)} document={document} key={i} />
                         ))
                     }
                 </div>

@@ -384,25 +384,39 @@ input {
   box-shadow: 0.2rem 0rem 1rem rgba(181, 154, 184, 0.25);
   cursor: pointer;
 
+  position: relative;
+
   .file {
       display: flex;
       justify-content: center;
       align-items: center;
-      ;
 
       gap: 1.2rem;
 
-      .file-title {
-          .title {
-              font-size: 2.4rem;
-              color: var(--primary-tint-70);
-          }
+      .title {
+          font-size: 2.4rem;
+          color: var(--primary-tint-70);
+          text-decoration: none;
       }
 
       .icon {
           width: 8rem;
           height: 8rem;
       }
+  }
+  .close-icon {
+    width: 3.2rem;
+    height: 3.2rem;
+    position: absolute;
+    top: 50%;
+    right: 1.6rem;
+    transform: translateY(-50%);
+    color: var(--primary-tint-20);
+    transition: .2s;
+
+    &:hover {
+      color: var(--primary);
+    }
   }
 
 }
