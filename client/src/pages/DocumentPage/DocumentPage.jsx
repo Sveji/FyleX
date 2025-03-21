@@ -24,6 +24,9 @@ const DocumentPage = () => {
     //Stores the url
     const [pdfUrl, setPdfUrl] = useState(null)
 
+    //Stores the highlites
+    const [keywords, setKeywords] = useState(null)
+
 
 
     // Gets the document from the backend
@@ -39,6 +42,8 @@ const DocumentPage = () => {
             if (response.status == 200) {
                 setAnalysis(response.data.analysis)
                 setPdfUrl(response.data.document)
+                setKeywords(response.data.analysis)
+                console.log(response.data.analysis)
                 console.log(response.data.document)
             }
         }
@@ -53,6 +58,8 @@ const DocumentPage = () => {
             <AnalysisBox
                 sentences={analysis}
             />
+
+            {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
         </div>
     )
 }

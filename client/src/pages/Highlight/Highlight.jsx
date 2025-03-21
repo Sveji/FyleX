@@ -17,12 +17,13 @@ PDFView.propTypes = {
     highlightedText: PropTypes.string.isRequired,
 };
 
-export default function PDFView({ pdfUrl }) {
+export default function PDFView({ pdfUrl, keywords = [] }) {
     // const searchPluginInstance = searchPlugin();
+    console.log(keywords)
 
 
     const searchPluginInstance = searchPlugin({
-        keyword: ['нашата основна']
+        keyword: [...keywords]
     })
     const { highlight } = searchPluginInstance;
 
