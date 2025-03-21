@@ -4,6 +4,8 @@ import LayoutGrid from "./components/LayoutGrid/LayoutGrid"
 import Main from "./pages/Main/Main"
 import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
+import ActivateMessage from "./pages/ActivateMessage/ActivateMessage"
+import Activate from "./pages/Activate/Activate"
 
 function App() {
 
@@ -19,7 +21,10 @@ function App() {
           <Route path="/" element={<Main />}>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="activate-message" element={<ActivateMessage />} />
+            <Route path="activate/:uidb/:token" element={<Activate />} />
           </Route>
+
 
         </Routes>
 

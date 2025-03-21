@@ -5,7 +5,7 @@ import { DataContext } from "../../context/DataContext"
 
 const Login = () => {
     // Gets global data from the context
-    const { navigate } = useContext(DataContext)
+    const { crud, navigate, setAccess, setRefresh } = useContext(DataContext)
 
 
 
@@ -24,12 +24,33 @@ const Login = () => {
     // Holds the state for the form
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState(null)
 
 
 
     // Sends a login request to the backend server
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const response = await crud({
+            url: '/api/user/login/',
+            method: 'post',
+            body: {
+                email,
+                password
+            }
+        })
+
+        console.log(response)
+
+        if(response.status == 400) setError(response.response.data.error)
+        if(response.status == 200) {
+            localStorage.setItem('access', response.data.token.access)
+            setAccess(response.data.token.access)
+            localStorage.setItem('refresh', response.data.token.refresh)
+            setAccess(response.data.token.refresh)
+            navigate('/')
+        }
     }
 
 
@@ -60,6 +81,7 @@ const Login = () => {
                     label: "Register",
                     route: "/register"
                 }}
+                error={error}
             />
         </PopUp>
     )
