@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import DataProvider from "./context/DataContext"
 import LayoutGrid from "./components/LayoutGrid/LayoutGrid"
 import Main from "./pages/Main/Main"
+import Login from "./components/Login/Login"
+import Register from "./components/Register/Register"
 
 function App() {
 
@@ -14,7 +16,10 @@ function App() {
 
         <Routes>
 
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<Main />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
 
         </Routes>
 

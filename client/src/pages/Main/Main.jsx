@@ -2,27 +2,42 @@ import Wave from '../../img/wave.svg'
 import Upload from '../../img/Group 1.png'
 import './main.less'
 import { FileUploader } from "react-drag-drop-files"
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect, useContext } from "react"
 import PopUp from '../../components/PopUp/PopUp'
 import Login from '../../components/Login/Login'
 import Register from '../../components/Register/Register'
 import { ImPriceTag } from 'react-icons/im'
 import { useDropzone } from 'react-dropzone'
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { DataContext } from '../../context/DataContext'
+import { Link, Outlet } from 'react-router-dom'
 
 
 const Main = () => {
+    // Gets global data from the context
+    const { crud, navigate } = useContext(DataContext)
 
-    const [file, setFile] = useState()
 
 
-    console.log(file)
+    // Stores the file input
+    const formData = new FormData()
+    
+    
+    
+    // Sends the file to the backend
+    const sendFile = async () => {
+        const response = await crud({
+            url: '/api/document/',
+            method: 'post',
+            body: formData
+        })
 
-    // const clearHandler = () => {
-    //     setFile(null)
+        if(response.status == 401) navigate('/login')
+    }
 
-    // }
+    
 
+    // Gets the file input
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file) => {
             const reader = new FileReader()
@@ -32,9 +47,12 @@ const Main = () => {
             reader.onload = () => {
                 // Do whatever you want with the file contents
                 const binaryStr = reader.result
-                console.log(binaryStr)
+                // console.log(binaryStr)
             }
+
             reader.readAsArrayBuffer(file)
+            formData.append("document", file)
+            sendFile()
         })
 
     }, [])
@@ -47,8 +65,11 @@ const Main = () => {
 
     })
 
+
+
     return (
         <section className="section-main">
+            <Outlet />
             {/* <PopUp classes={'account-box'}>
                 <Login />
                 <Register />
@@ -63,7 +84,7 @@ const Main = () => {
                 </div>
                 <div className='sub-title'>
                     <p>Want to save your analysis?</p>
-                    <p className='login'>Login</p>
+                    <Link to='/login' className='login'>Login</Link>
                 </div>
             </div>
 
