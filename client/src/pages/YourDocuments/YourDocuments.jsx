@@ -1,12 +1,17 @@
 import './yourdocuments.less'
 import Documents from './Documents'
 import Wave from '../../img/Wave.svg'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { DataContext } from '../../context/DataContext'
 
 const YourDocuments = () => {
     // Gets global data from the context
     const { crud, access } = useContext(DataContext)
+
+
+
+    // Holds the state for the documents
+    const [documents, setDocuments] = useState([])
 
 
 
@@ -17,7 +22,13 @@ const YourDocuments = () => {
                 url: '/api/document/',
                 method: 'get'
             })
+            console.log(response)
+
+            if(response.status == 200) {
+                setDocuments(response.data)
+            }
         }
+
 
         if(access) handleGetDocuments()
     }, [access])
@@ -35,10 +46,11 @@ const YourDocuments = () => {
                 </div>
 
                 <div className='documents'>
-
-                    <Documents />
-                    <Documents />
-                    <Documents />
+                    {
+                        documents.map((document, i) => (
+                            <Documents key={i} />
+                        ))
+                    }
                 </div>
             </section>
         </>
