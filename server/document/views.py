@@ -37,8 +37,27 @@ def document(request):
         
         document_url = upload_result['secure_url']
 
+        url = ''
+
+        data = {
+            "document_url": document.document,
+        }
+
+        headers = {
+            "Content-Type": "application/json",
+        }
+
+        response = requests.post(url, json = data, headers = headers)
+
+        if response.status_code == 200:
+            response_data = response.json()
+            analysis = response_data.get('analysis')
+        else:
+            return Response("Not the correct status code!", status=status.HTTP_400_BAD_REQUEST)
+
         document_object = Document.objects.create(
-            document = document_url
+            document = document_url,
+            analysis = analysis,
         )
 
         return Response({
@@ -102,5 +121,15 @@ def get_summary(request):
         }
 
         response = requests.post(url, json = data, headers = headers)
+
+        if response.status_code == 200:
+            response_data = response.json()
+            summary = response_data.get('summary')
+
+        try:
+            document.summary = summary
+            document.save()
+        except:
+            return Response("Error with the save!", status=status.HTTP_400_BAD_REQUEST)
 
         return Response(response)
