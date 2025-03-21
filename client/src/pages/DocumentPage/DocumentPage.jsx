@@ -4,6 +4,8 @@ import { DataContext } from "../../context/DataContext"
 import AnalysisBox from "../../components/AnalysisBox/AnalysisBox"
 import Highlight from "../Highlight/Highlight"
 import { div } from "three/tsl"
+import AssistantBox from "../../components/AssistantBox/AssistantBox"
+import './documentPage.less'
 
 const DocumentPage = () => {
     // Gets global data from the context
@@ -47,12 +49,10 @@ const DocumentPage = () => {
 
 
     return (
-        <>
+        <div className="result-container">
             <AnalysisBox
                 sentences={analysis}
             />
-            {pdfUrl && <Highlight pdfUrl={pdfUrl} />}
-
         </>
     )
 }
