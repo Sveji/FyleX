@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import DataProvider from "./context/DataContext"
 import LayoutGrid from "./components/LayoutGrid/LayoutGrid"
 import Main from "./pages/Main/Main"
+import YourDocuments from "./pages/YourDocuments/YourDocuments"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Routes>
 
           <Route path="/" element={<Main />} />
+          <Route path="/mydocuments" element={<YourDocuments />} />
 
         </Routes>
 

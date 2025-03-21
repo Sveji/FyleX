@@ -1,9 +1,10 @@
 import Wave from '../../img/wave.svg'
 import Upload from '../../img/Group 1.png'
 import './main.less'
+import '../../globalStyling/components.less'
 import { FileUploader } from "react-drag-drop-files"
 import { useState, useCallback } from "react"
-import { ImPriceTag } from 'react-icons/im'
+// import { ImPriceTag } from 'react-icons/im'
 import { useDropzone } from 'react-dropzone'
 import { MdOutlineCloudUpload } from "react-icons/md";
 
