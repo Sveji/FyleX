@@ -25,9 +25,9 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="activate-message" element={<ActivateMessage />} />
             <Route path="activate/:uidb/:token" element={<Activate />} />
-            <Route path="/highlight" element={<Highlight />} />
           </Route>
 
+          <Route path="/highlight" element={<Highlight />} />
           <Route path="/mydocuments" element={<YourDocuments />} />
 
         </Routes>
