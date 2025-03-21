@@ -86,7 +86,7 @@ def document(request):
         document_id = request.query_params.get('id')
         
         if not document_id:
-            documents = Document.objects.values('id', 'document')
+            documents = Document.objects.values('id', 'document', 'analisys', 'summary', 'review')
             return Response(list(documents), status=status.HTTP_200_OK)
         
         else:
@@ -94,7 +94,10 @@ def document(request):
             
             return Response({
                 "id": document.id,
-                "document": document.document
+                "document": document.document,
+                "analisys": document.analisys,
+                "summary": document.summary,
+                "review": document.review,
             })
         
 @api_view(['GET'])
@@ -150,6 +153,7 @@ def get_review(request):
 
     data = {
         "url": document.document,
+        "analisys": document.analysis,
     }
     
     response = requests.post(url, json = data)
