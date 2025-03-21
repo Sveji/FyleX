@@ -2,6 +2,9 @@ import Wave from '../../img/wave.svg'
 import './main.less'
 import { FileUploader } from "react-drag-drop-files"
 import { useState, useCallback } from "react"
+import PopUp from '../../components/PopUp/PopUp'
+import Login from '../../components/Login/Login'
+import Register from '../../components/Register/Register'
 
 const Main = () => {
 
@@ -17,6 +20,11 @@ const Main = () => {
 
     return (
         <section className="section-main">
+            {/* <PopUp classes={'account-box'}>
+                <Login />
+                <Register />
+            </PopUp> */}
+
             <img src={Wave} className='wave' />
 
             <div className='text-section'>

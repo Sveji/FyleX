@@ -1,14 +1,15 @@
 import { useState } from "react"
 import AccountForm from "../AccountBox/AccountForm"
 
-const Login = () => {
+const Register = () => {
     // Holds the state for the form
     const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
 
 
-    // Sends a login request to the backend server
+    // Sends a register request to the backend server
     const handleSubmit = async (e) => {
         e.preventDefault()
     }
@@ -18,8 +19,8 @@ const Login = () => {
     return (
         <AccountForm
             handleSubmit={handleSubmit}
-            title="Log in"
-            text="Log in to your account to analyze your documents."
+            title="Register"
+            text="Register an account to analyze your documents."
             inputs={[
                 {
                     type: "email",
@@ -28,20 +29,26 @@ const Login = () => {
                     placeholder: "Email"
                 },
                 {
+                    type: "text",
+                    value: username,
+                    setValue: setUsername,
+                    placeholder: "Username"
+                },
+                {
                     type: "password",
                     value: password,
                     setValue: setPassword,
                     placeholder: "Password"
                 }
             ]}
-            btn="Log in"
+            btn="Register"
             link={{
-                text: "Don't have an account?",
-                label: "Register",
-                route: "/register"
+                text: "Already have an account?",
+                label: "Log in",
+                route: "/login"
             }}
         />
     )
 }
 
-export default Login
+export default Register
