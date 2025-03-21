@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { DataContext } from "../../context/DataContext"
 import AnalysisBox from "../../components/AnalysisBox/AnalysisBox"
+import AssistantBox from "../../components/AssistantBox/AssistantBox"
+import './documentPage.less'
 
 const DocumentPage = () => {
     // Gets global data from the context
@@ -40,11 +42,12 @@ const DocumentPage = () => {
 
 
     return (
-        <>
+        <div className="result-container">
             <AnalysisBox
                 sentences={analysis}
             />
-        </>
+            <AssistantBox />
+        </div>
     )
 }
 
