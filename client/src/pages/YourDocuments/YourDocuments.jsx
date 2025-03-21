@@ -17,6 +17,11 @@ const YourDocuments = () => {
 
 
 
+    // Holds the error state of the page
+    const [error, setError] = useState(null)
+
+
+
     // Gets the documents from the backend
     useEffect(() => {
         const handleGetDocuments = async () => {
@@ -49,6 +54,9 @@ const YourDocuments = () => {
             const newDocs = documents.filter(doc => doc.id !== docId)
             setDocuments(newDocs)
         }
+        if(response.status == 400) {
+            setError(response.response.data)
+        }
     }
 
 
@@ -60,7 +68,7 @@ const YourDocuments = () => {
                 <div className='title'>
                     <h1>Your documents</h1>
                     <p>Summarize your documents. Identify suspicious parts and consult with an AI model.</p>
-
+                    {error && <p className="error">{error}</p>}
                 </div>
 
                 <div className='documents'>

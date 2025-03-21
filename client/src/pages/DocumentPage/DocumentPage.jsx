@@ -44,6 +44,11 @@ const DocumentPage = () => {
 
 
 
+    // Holds the error state
+    const [error, setError] = useState(null)
+
+
+
     // Gets the document from the backend
     useEffect(() => {
         const handleGetDocument = async () => {
@@ -63,6 +68,8 @@ const DocumentPage = () => {
                 setPdfUrl(response.data.document)
                 setKeywords(analysisArr)
             }
+
+            if(response.status == 400) setError(response.response.data)
         }
 
         const handleGetReviews = async () => {
@@ -93,60 +100,56 @@ const DocumentPage = () => {
         console.log(response)
 
         if(response.status == 200) setSummary(response.data.summary)
-    }
-
-    // Get review
-    const handleReview = async () => {
-        const response = await crud({
-            url: `/api/document/review/?document_id=${id}`,
-            method: 'get'
-        })
-
-        // setReview(response.)
-        // console.log(response)
+        if(response.status == 400) setError(response.response.data)
+        if(response.status == 500 || response.status == 502) setError(response.response.data.error)
     }
 
 
     return (
         <section className="section-doc">
             <img src={Wave} className='wave' />
-            <div className="result-container">
-                <div className="documents-container">
-                    <div className="document-box">
-                        <div className="title-box">
-                            <div className="file-container" onClick={() => navigate(`/document/${document.id}`)}>
-                                <div className="file">
-                                    <LuFileText className="icon" size={32} color={"#000000"} fill={"#7E4F83"} />
-                                    <div className="file-title">
-                                        <p className="title">{document.name}</p>
+            {
+                error ? 
+                <p className="error">{error}</p>
+                :
+                <div className="result-container">
+                    <div className="documents-container">
+                        <div className="document-box">
+                            <div className="title-box">
+                                <div className="file-container" onClick={() => navigate(`/document/${document.id}`)}>
+                                    <div className="file">
+                                        <LuFileText className="icon" size={32} color={"#000000"} fill={"#7E4F83"} />
+                                        <div className="file-title">
+                                            <p className="title">{document.name}</p>
+                                        </div>
                                     </div>
+                    
                                 </div>
-                
+                                <button onClick={handleSummarize} className="btn">Summarize</button>
                             </div>
-                            <button onClick={handleSummarize} className="btn">Summarize</button>
+
+                            {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
                         </div>
 
-                        {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
+                        {
+                            summary &&
+                            <div className="summary-box">
+                                <div className="title-box">
+                                    <h1>Summary</h1>
+                                </div>
+                                <p className="summary">{summary}</p>
+                            </div>
+                        }
                     </div>
 
-                    {
-                        summary &&
-                        <div className="summary-box">
-                            <div className="title-box">
-                                <h1>Summary</h1>
-                            </div>
-                            <p className="summary">{summary}</p>
-                        </div>
-                    }
+                    <div className="boxes">
+                        <AnalysisBox
+                            sentences={analysis}
+                        />
+                        <AssistantBox />
+                    </div>
                 </div>
-
-                <div className="boxes">
-                    <AnalysisBox
-                        sentences={analysis}
-                    />
-                    <AssistantBox />
-                </div>
-            </div>
+            }
         </section>
     )
 }

@@ -26,6 +26,11 @@ const Main = () => {
 
 
 
+    // Holds the state for the error
+    const [error, setError] = useState(null)
+
+
+
     // Sends the file to the backend
     const sendFile = async () => {
         console.log(formData.current.get("document"))
@@ -37,7 +42,8 @@ const Main = () => {
 
         console.log(response)
 
-        if (response.status == 401) navigate('/login')
+        if(response.status == 401) navigate('/login')
+        if(response.status == 404 || response.status == 400) setError(response.response.data)
         if(response.status == 200) navigate(`/document/${response.data.id}`)
 
     }
@@ -59,7 +65,7 @@ const Main = () => {
 
             reader.readAsArrayBuffer(file)
             formData.current.append("document", file)
-            formData.current.append("name", file.name)
+            // formData.current.append("name", file.name)
             formData.current.append("user", access)
             sendFile()
         })
@@ -93,6 +99,8 @@ const Main = () => {
                 <div className='title-section'>
                     <h1>Scan documents for fraud</h1>
                     <p>Summarize your documents. Identify suspicious parts and consult with an AI model.</p>
+
+                    {error && <p className="error">{error}</p>}
                 </div>
                 {
                     access ?
