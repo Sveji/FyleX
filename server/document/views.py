@@ -111,21 +111,19 @@ def get_summary(request):
         except Document.DoesNotExist:
             return Response("Error no object found!", status=status.HTTP_400_BAD_REQUEST)
         
-        url = ''
+        url = 'http://127.0.0.1:7000/api/service/summary'
 
         data = {
-            "document_url": document.document,
+            "url": document.document,
         }
 
-        headers = {
-            "Content-Type": "application/json",
-        }
-
-        response = requests.post(url, json = data, headers = headers)
+        response = requests.post(url, json = data)
 
         if response.status_code == 200:
             response_data = response.json()
-            summary = response_data.get('summary')
+            summary = response_data.get('summary_text')
+        else:
+            return Response("Starus code error!", status=status.HTTP_400_BAD_REQUEST)
 
         try:
             document.summary = summary
@@ -134,3 +132,38 @@ def get_summary(request):
             return Response("Error with the save!", status=status.HTTP_400_BAD_REQUEST)
 
         return Response(response)
+    
+@api_view(['GET'])
+def get_review(request):
+
+    document_id = request.query_params.get("document_id")
+
+    if not document_id:
+        return Response("Error no document_id!", status=status.HTTP_404_NOT_FOUND)
+    
+    try:
+        document = Document.objects.get(id = document_id)
+    except Document.DoesNotExist:
+        return Response("Error no object found!", status=status.HTTP_400_BAD_REQUEST)
+    
+    url = ''
+
+    data = {
+        "url": document.document,
+    }
+    
+    response = requests.post(url, json = data)
+
+    if response.status_code == 200:
+        response_data = response.json()
+        review = response_data.get('review')
+    else:
+        return Response("Starus code error!", status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        document.review = review
+        document.save()
+    except:
+        return Response("Error with the save!", status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(response)

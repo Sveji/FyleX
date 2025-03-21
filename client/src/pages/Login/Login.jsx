@@ -43,7 +43,7 @@ const Login = () => {
 
         console.log(response)
 
-        if(response.status == 400) setError(response.response.data.error)
+        if(response.status == 400 || response.status == 401) setError(response.response.data.error)
         if(response.status == 200) {
             localStorage.setItem('access', response.data.token.access)
             setAccess(response.data.token.access)
@@ -82,6 +82,7 @@ const Login = () => {
                     route: "/register"
                 }}
                 error={error}
+                forgotPass
             />
         </PopUp>
     )
