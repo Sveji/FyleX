@@ -282,9 +282,9 @@ def google_login(request):
     idinfo = id_token.verify_oauth2_token(token, requests.Request(), GOOGLE_OAUTH2)
     print(idinfo)
     user, created = CustomUser.objects.get_or_create(email=idinfo['email'], username = idinfo['name'])
-    refresh = RefreshToken.for_user(user)
     user.is_active = True
     user.save()
+    refresh = RefreshToken.for_user(user)
     return Response({
         'refresh': str(refresh),
         'access': str(refresh.access_token),
