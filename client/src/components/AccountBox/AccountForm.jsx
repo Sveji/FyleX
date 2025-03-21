@@ -40,7 +40,7 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
                 </div>
                 {
                     forgotPass &&
-                    <Link className="forgot">Forgot password?</Link>
+                    <Link to='/forgot-pass' className="forgot">Forgot password?</Link>
                 }
 
                 <button className="btn" type='submit'>{btn}</button>
