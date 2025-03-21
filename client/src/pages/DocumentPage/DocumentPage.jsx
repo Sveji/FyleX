@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom"
 import { DataContext } from "../../context/DataContext"
 import AnalysisBox from "../../components/AnalysisBox/AnalysisBox"
 import Highlight from "../Highlight/Highlight"
-import { div } from "three/tsl"
 import AssistantBox from "../../components/AssistantBox/AssistantBox"
 import './documentPage.less'
 
@@ -61,6 +60,7 @@ const DocumentPage = () => {
             <AnalysisBox
                 sentences={analysis}
             />
+            <AssistantBox />
 
             {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
         </div>

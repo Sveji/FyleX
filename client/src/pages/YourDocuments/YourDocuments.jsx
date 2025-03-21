@@ -49,7 +49,7 @@ const YourDocuments = () => {
                 <div className='documents'>
                     {
                         documents.map((document, i) => (
-                            <Documents key={i} />
+                            <Documents document={document} key={i} />
                         ))
                     }
                 </div>
