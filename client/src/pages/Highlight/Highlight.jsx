@@ -1,11 +1,10 @@
-// import { Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
+
 import PropTypes from "prop-types";
 import { Worker, Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
-// import { highlightPlugin } from "@react-pdf-viewer/highlight";
-// Import styles
+
 import "@react-pdf-viewer/highlight/lib/styles/index.css";
 import * as pdfjsLib from "pdfjs-dist";
-// Import styles
+
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { useEffect, useState } from "react";
 import { searchPlugin } from "@react-pdf-viewer/search";

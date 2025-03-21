@@ -40,10 +40,13 @@ const DocumentPage = () => {
             console.log(response)
 
             if (response.status == 200) {
+                const analysis = response.data.analysis.map((text) => {
+                    return text.trim()
+                })
                 setAnalysis(response.data.analysis)
                 setPdfUrl(response.data.document)
-                setKeywords(response.data.analysis)
-                console.log(response.data.analysis)
+                setKeywords(analysis)
+                console.log(analysis)
                 console.log(response.data.document)
             }
         }
