@@ -91,8 +91,9 @@ const AssistantBox = () => {
                             <div className="line"></div>
                         </div>
                         {
-                            messages.map(message => (
+                            messages.map((message, i) => (
                                 <Message
+                                    key={i}
                                     message={message.message}
                                     type={message.type}
                                 />

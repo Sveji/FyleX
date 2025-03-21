@@ -8,7 +8,7 @@ import './documentPage.less'
 
 const DocumentPage = () => {
     // Gets global data from the context
-    const { crud } = useContext(DataContext)
+    const { crud, access } = useContext(DataContext)
 
 
 
@@ -33,7 +33,10 @@ const DocumentPage = () => {
         const handleGetDocument = async () => {
             const response = await crud({
                 url: `/api/document/?id=${id}`,
-                method: 'get'
+                method: 'get',
+                body: {
+                    user: access
+                }
             })
 
             console.log(response)
