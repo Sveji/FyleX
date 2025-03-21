@@ -58,6 +58,18 @@ const DocumentPage = () => {
 
 
 
+    // Gets the summarization
+    const handleSummarize = async () => {
+        const response = await crud({
+            url: `/api/document/summary/?document_id=${id}/`,
+            method: 'get'
+        })
+
+        console.log(response)
+    }
+
+
+
     return (
         <div className="result-container">
             <AnalysisBox
@@ -65,7 +77,10 @@ const DocumentPage = () => {
             />
             <AssistantBox />
 
-            {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
+            <div className="document-box">
+                <button onClick={() => handleSummarize()} className="btn">Summarize</button>
+                {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
+            </div>
         </div>
     )
 }
