@@ -152,7 +152,7 @@ const AssistantBox = () => {
     return (
         <div className="assistant-box">
             <div className="title-box">
-                <h1>AI Assistant</h1>
+                <h1>Questions & Answers</h1>
             </div>
 
             <div className="chat-container">
@@ -177,7 +177,7 @@ const AssistantBox = () => {
                 <div className="input-container">
                     <input
                         type="text"
-                        placeholder="Consult with our AI model..."
+                        placeholder="Ask questions based on the document..."
                         value={currMessage}
                         onChange={(e) => setCurrMessage(e.target.value)}
                     />

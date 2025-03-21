@@ -1,105 +1,110 @@
 @import url('../../globalStyling/variables.less');
 @import url('../../globalStyling/components.less');
 
-.wave {
-    width: 100vw;
-    object-fit: cover;
-
-    position: fixed;
-    z-index: 1;
-
-}
-
-.result-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6rem;
-    padding: 10rem @0colIn;
-
-    z-index: 2;
-
-    .documents-container {
-        display: flex;
-        gap: 2.4rem;
+.section-doc {
+    .wave {
         width: 100%;
+        object-fit: cover;
 
-        .document-box {
-            .card();
-            border: 0.2rem dashed var(--primary-tint-20);
-            max-height: 96rem;
-
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2.9rem; // justify-content: center;
-            // background-color: aqua;
-
-            z-index: 2;
-
-            .title-box {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-
-                z-index: 2;
-
-                .file-container {
-                    box-shadow: none;
-
-                    .file {
-                        gap: 0.4rem;
-                        .file-title {
-                            .title {
-                                font-size: 1.8rem;
-                            }
-                        }
-                    }
-
-                    .icon {
-                        width: 4.8rem;
-                        height: 4.8rem;
-                    }
-                }
-            }
-
-            .pdf-viewer-container {
-                border-radius: 3rem;
-                width: 100%;
-                // display: flex;
-                overflow: auto;
-                // padding: 0;
-            }
-        }
-
-        .summary-box {
-            .card();
-            width: 30%;
-
-            display: flex;
-            flex-direction: column;
-            gap: 3.2rem;
-            border: 0.2rem dashed var(--primary-tint-20);
-
-            .summary {
-                font-weight: 400;
-                color: var(--primary-tint-50);
-            }
-        }
+        position: fixed;
+        left: 0;
+        z-index: 1;
 
     }
 
-    .boxes {
+    .result-container {
         display: flex;
+        flex-direction: column;
         // align-items: center;
-        justify-content: center;
-        padding: 3.7rem 6.4rem;
-        gap: 3.5rem;
-        width: 100vw;
+        // justify-content: center;
+        gap: 6rem;
+        width: 100%;
+        padding: 10rem @0colIn;
+        // background-color: aqua;
 
-        z-index: 3;
+        z-index: 2;
 
-        // border: solid 3px red;
+        .documents-container {
+            display: flex;
+            gap: 2.4rem;
+            width: 100%;
+
+            .document-box {
+                .card();
+                border: 0.2rem dashed var(--primary-tint-20);
+                max-height: 96rem;
+
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 2.9rem; // justify-content: center;
+                // background-color: aqua;
+
+                z-index: 2;
+
+                .title-box {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    z-index: 2;
+
+                    .file-container {
+                        box-shadow: none;
+
+                        .file {
+                            gap: 0.4rem;
+                            .file-title {
+                                .title {
+                                    font-size: 1.8rem;
+                                }
+                            }
+                        }
+
+                        .icon {
+                            width: 4.8rem;
+                            height: 4.8rem;
+                        }
+                    }
+                }
+
+                .pdf-viewer-container {
+                    border-radius: 3rem;
+                    width: 100%;
+                    // display: flex;
+                    overflow: auto;
+                    // padding: 0;
+                }
+            }
+
+            .summary-box {
+                .card();
+                width: 30%;
+
+                display: flex;
+                flex-direction: column;
+                gap: 3.2rem;
+                border: 0.2rem dashed var(--primary-tint-20);
+
+                .summary {
+                    font-weight: 400;
+                    color: var(--primary-tint-50);
+                }
+            }
+
+        }
+
+        .boxes {
+            display: flex;
+            // align-items: center;
+            justify-content: center;
+            padding: 3.7rem 6.4rem;
+            gap: 3.5rem;
+            width: 100vw;
+
+            z-index: 3;
+
+            // border: solid 3px red;
+        }
     }
 }

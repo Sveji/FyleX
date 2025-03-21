@@ -108,7 +108,7 @@ const DocumentPage = () => {
 
 
     return (
-        <>
+        <section className="section-doc">
             <img src={Wave} className='wave' />
             <div className="result-container">
                 <div className="documents-container">
@@ -147,7 +147,7 @@ const DocumentPage = () => {
                     <AssistantBox />
                 </div>
             </div>
-        </>
+        </section>
     )
 }
 
