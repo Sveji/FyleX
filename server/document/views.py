@@ -102,7 +102,10 @@ def document(request):
             return Response(list(documents), status=status.HTTP_200_OK)
         
         else:
-            document = Document.objects.get(id = document_id)
+            try:
+                document = Document.objects.get(id = document_id)
+            except:
+                return Response("Error, incorrect given id!", status=status.HTTP_400_BAD_REQUEST)
             
             if document.user.id != user.id:
                 return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
