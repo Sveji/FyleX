@@ -102,7 +102,10 @@ def document(request):
             return Response(list(documents), status=status.HTTP_200_OK)
         
         else:
-            document = Document.objects.get(id = document_id)
+            try:
+                document = Document.objects.get(id = document_id)
+            except:
+                return Response("Error, incorrect given id!", status=status.HTTP_400_BAD_REQUEST)
             
             if document.user.id != user.id:
                 return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
@@ -164,34 +167,33 @@ def get_review(request):
     user = request.user
 
     document_id = request.query_params.get("document_id")
-    if document.user.id != user.id:
-        return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
 
     if not document_id:
         return Response("Error no document_id!", status=status.HTTP_404_NOT_FOUND)
     
     try:
         document = Document.objects.get(id = document_id)
+        if document.user.id != user.id:
+            return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
     except Document.DoesNotExist:
         return Response("Error no object found!", status=status.HTTP_400_BAD_REQUEST)
     
-    url = ''
+    url = 'http://127.0.0.1:7000/api/service/review'
 
     data = {
         "url": document.document,
-        "analisys": document.analysis,
+        "analysis": document.analysis,
     }
     
     response = requests.post(url, json = data)
 
     if response.status_code == 200:
         response_data = response.json()
-        review = response_data.get('review')
     else:
         return Response("Starus code error!", status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        document.review = review
+        document.review = response_data
         document.save()
     except:
         return Response("Error with the save!", status=status.HTTP_400_BAD_REQUEST)

@@ -82,6 +82,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         self.group_name = f"document_{chat_name}"
 
+        self.document = document
+
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -92,22 +94,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
         action = data.get("action")
 
         if action == "send_message":
-            message = data.get("message")
+            question = data.get("question")
 
-            try:
-                data_for_post = json.loads(text_data)
-            except json.JSONDecodeError:
-                await self.send(text_data=json.dumps({"error": "Invalid JSON"}))
-                return
+            data_for_post = {
+                "question": question,
+                "url": self.document.document,
+            }
             
-            response_data = await self.send_post_request(message)
+            response_data = await self.send_post_request(data_for_post)
 
             await self.channel_layer.group_send(
                 self.group_name,
                 {
                     "type": "send_message_notification",
-                    "message": message,
-                    "response_data": response_data
+                    "question": question,
+                    "response_data": response_data,
+                    "url": self.document.document,
                 },
             )
 
@@ -134,8 +136,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def send_message_notification(self, event):
         await self.send(text_data=json.dumps({
             "action": "succses",
-            "message": event["message"],
-            "response_data": event["response_data"]
+            "question": event["question"],
+            "response_data": event["response_data"],
+            "url": event["url"]
         }))
 
     async def send_post_request(self, data):
