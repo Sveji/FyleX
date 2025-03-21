@@ -41,7 +41,7 @@ function App() {
 
           </Route>
 
-          {/* <Route path="/highlight" element={<Highlight />} /> */}
+          
           <Route path="/mydocuments" element={<YourDocuments />} />
           <Route path="/document/:id" element={<DocumentPage />} />
 
