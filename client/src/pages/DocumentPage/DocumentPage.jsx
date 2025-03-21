@@ -38,29 +38,29 @@ const DocumentPage = () => {
 
 
 
+    // Holds the summarized document
+    const [summary, setSummary] = useState(null)
+
+
+
     // Gets the document from the backend
     useEffect(() => {
         const handleGetDocument = async () => {
             const response = await crud({
                 url: `/api/document/?id=${id}`,
-                method: 'get',
-                body: {
-                    user: access
-                }
+                method: 'get'
             })
 
             console.log(response)
 
             if (response.status == 200) {
-                const analysis = response.data.analysis.map((text) => {
+                const analysisArr = response.data.analysis.map((text) => {
                     return text.trim()
                 })
                 setDocument(response.data)
-                setAnalysis(response.data.analysis)
+                setAnalysis(analysisArr)
                 setPdfUrl(response.data.document)
-                setKeywords(analysis)
-                // console.log(analysis)
-                // console.log(response.data.document)
+                setKeywords(analysisArr)
             }
         }
 
@@ -71,7 +71,7 @@ const DocumentPage = () => {
             })
 
             // setReview(response.)
-            console.log(response)
+            // console.log(response.data[0])
         }
 
         if (id) {
@@ -85,37 +85,50 @@ const DocumentPage = () => {
     // Gets the summarization
     const handleSummarize = async () => {
         const response = await crud({
-            url: `/api/document/summary/?document_id=${id}/`,
+            url: `/api/document/summary/?document_id=${id}`,
             method: 'get'
         })
 
         console.log(response)
+
+        if(response.status == 200) setSummary(response.data.summary)
     }
 
     // Get review
     const handleReview = async () => {
         const response = await crud({
-            url: `/api/document/review/?document_id=${id}/`,
+            url: `/api/document/review/?document_id=${id}`,
             method: 'get'
         })
 
         // setReview(response.)
-        console.log(response)
+        // console.log(response)
     }
 
 
     return (
         <>
-
             <img src={Wave} className='wave' />
             <div className="result-container">
-                <div className="document-box">
-                    <div className="btn-container">
-                        <Documents document={document} />
-                        <button onClick={() => handleSummarize()} className="btn">Summarize</button>
+                <div className="documents-container">
+                    <div className="document-box">
+                        <div className="title-box">
+                            <Documents document={document} />
+                            <button onClick={handleSummarize} className="btn">Summarize</button>
+                        </div>
+
+                        {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
                     </div>
 
-                    {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
+                    {
+                        summary &&
+                        <div className="summary-box">
+                            <div className="title-box">
+                                <h1>Summary</h1>
+                            </div>
+                            <p className="summary">{summary}</p>
+                        </div>
+                    }
                 </div>
 
                 <div className="boxes">
@@ -124,10 +137,6 @@ const DocumentPage = () => {
                     />
                     <AssistantBox />
                 </div>
-
-
-
-
             </div>
         </>
     )

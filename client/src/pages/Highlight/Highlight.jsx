@@ -1,6 +1,4 @@
 
-import './highlight.less'
-
 import PropTypes from "prop-types";
 import { Worker, Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
 
@@ -50,18 +48,18 @@ export default function PDFView({ pdfUrl, keywords = [] }) {
     // });
 
     return (
-        <div className="border-solid border-2 rounded-md border-slate-300 h-screen w-auto overflow-auto overscroll-contain">
+        // <div /*className="border-solid border-2 rounded-md border-slate-300 h-screen w-auto overflow-auto overscroll-contain"*/>
+        <div className="pdf-viewer-container">
             <Worker workerUrl={workerUrl} >
-                <div className="pdf-viewer-container">
-                    <Viewer
+                <Viewer
 
-                        fileUrl={pdfUrl}
-                        onDocumentLoad={handleDocumentLoad}
-                        plugins={[searchPluginInstance]}
-                    />
-                </div>
+                    fileUrl={pdfUrl}
+                    onDocumentLoad={handleDocumentLoad}
+                    plugins={[searchPluginInstance]}
+                />
 
             </Worker>
         </div>
+        // {/* </div> */}
     );
 }
