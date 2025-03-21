@@ -72,15 +72,21 @@ const DocumentPage = () => {
 
     return (
         <div className="result-container">
-            <AnalysisBox
-                sentences={analysis}
-            />
-            <AssistantBox />
-
             <div className="document-box">
                 <button onClick={() => handleSummarize()} className="btn">Summarize</button>
                 {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
             </div>
+
+            <div className="boxes">
+                <AnalysisBox
+                    sentences={analysis}
+                />
+                <AssistantBox />
+            </div>
+
+
+
+
         </div>
     )
 }

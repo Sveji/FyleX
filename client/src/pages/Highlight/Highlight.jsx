@@ -1,4 +1,6 @@
 
+import './highlight.less'
+
 import PropTypes from "prop-types";
 import { Worker, Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
 
