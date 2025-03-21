@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from utt import extract_text_from_url
 from predict.predict import prediction
 from llm.llm import process_review
+from qa.qa import answer_question
 from transformers import pipeline
 
 summarizer = pipeline("summarization", model="Falconsai/text_summarization")
@@ -15,6 +16,10 @@ class AnalysisModel(BaseModel):
 class ReviewModel(BaseModel):
     url: str
     analysis: list
+
+class QAModel(BaseModel):
+    url: str
+    question: str
 
 app = FastAPI()
 
@@ -39,3 +44,12 @@ def review(item: ReviewModel):
     reviews = process_review(contact)
     return reviews
 
+
+@app.post("/api/service/qa")
+def qa(item: QAModel):
+    context = extract_text_from_url(url=item.url)
+    question = item.question
+    answer = answer_question(question, context)
+    return {
+        "answer": answer
+    }
