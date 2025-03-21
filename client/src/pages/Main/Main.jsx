@@ -4,8 +4,8 @@ import './main.less'
 import { FileUploader } from "react-drag-drop-files"
 import { useState, useCallback, useEffect, useContext } from "react"
 import PopUp from '../../components/PopUp/PopUp'
-import Login from '../../components/Login/Login'
-import Register from '../../components/Register/Register'
+import Login from '../Login/Login'
+import Register from '../Register/Register'
 import { ImPriceTag } from 'react-icons/im'
 import { useDropzone } from 'react-dropzone'
 import { MdOutlineCloudUpload } from "react-icons/md";

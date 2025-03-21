@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
 import './account.less'
 
-const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "", link }) => {
+const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "", link, error = null }) => {
     return (
         <div>
             <div className="text-box">
                 <h1>{title}</h1>
                 <p>{text}</p>
+                {error && <p className="error">{error}</p>}
             </div>
 
             <form className="account-form" onSubmit={(e) => handleSubmit(e)}>

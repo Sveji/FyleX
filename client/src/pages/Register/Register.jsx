@@ -1,11 +1,11 @@
 import { useContext, useState } from "react"
-import AccountForm from "../AccountBox/AccountForm"
-import PopUp from "../PopUp/PopUp"
+import AccountForm from "../../components/AccountBox/AccountForm"
+import PopUp from "../../components/PopUp/PopUp"
 import { DataContext } from "../../context/DataContext"
 
-const Login = () => {
+const Register = () => {
     // Gets global data from the context
-    const { navigate } = useContext(DataContext)
+    const { crud, navigate } = useContext(DataContext)
 
 
 
@@ -23,13 +23,31 @@ const Login = () => {
 
     // Holds the state for the form
     const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState(null)
 
 
 
-    // Sends a login request to the backend server
+    // Sends a register request to the backend server
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const response = await crud({
+            url: '/api/user/register/',
+            method: 'post',
+            body: {
+                username,
+                email,
+                password
+            }
+        })
+
+        console.log(response)
+
+        if(response.status == 400) {
+            setError(response.response.data.error)
+        }
     }
 
 
@@ -38,8 +56,8 @@ const Login = () => {
         <PopUp classes={'account-box'} shown={shown} onClose={handleClosePopUp}>
             <AccountForm
                 handleSubmit={handleSubmit}
-                title="Log in"
-                text="Log in to your account to analyze your documents."
+                title="Register"
+                text="Register an account to analyze your documents."
                 inputs={[
                     {
                         type: "email",
@@ -48,21 +66,28 @@ const Login = () => {
                         placeholder: "Email"
                     },
                     {
+                        type: "text",
+                        value: username,
+                        setValue: setUsername,
+                        placeholder: "Username"
+                    },
+                    {
                         type: "password",
                         value: password,
                         setValue: setPassword,
                         placeholder: "Password"
                     }
                 ]}
-                btn="Log in"
+                btn="Register"
                 link={{
-                    text: "Don't have an account?",
-                    label: "Register",
-                    route: "/register"
+                    text: "Already have an account?",
+                    label: "Log in",
+                    route: "/login"
                 }}
+                error={error}
             />
         </PopUp>
     )
 }
 
-export default Login
+export default Register
