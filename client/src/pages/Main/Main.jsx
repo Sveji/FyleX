@@ -32,6 +32,8 @@ const Main = () => {
             body: formData
         })
 
+        console.log(response)
+
         if(response.status == 401) navigate('/login')
     }
 
