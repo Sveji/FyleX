@@ -89,10 +89,18 @@ const Main = () => {
                     <h1>Scan documents for fraud</h1>
                     <p>Summarize your documents. Identify suspicious parts and consult with an AI model.</p>
                 </div>
-                <div className='sub-title'>
-                    <p>Want to save your analysis?</p>
-                    <Link to='/login' className='login'>Login</Link>
-                </div>
+                {
+                    access ?
+                    <div className='sub-title'>
+                        <p>See your documents and analyses</p>
+                        <Link to='/nqmam-oshte' className='login'>here</Link>
+                    </div>
+                    :
+                    <div className='sub-title'>
+                        <p>Want to save your analysis?</p>
+                        <Link to='/login' className='login'>Login</Link>
+                    </div>
+                }
             </div>
 
 
