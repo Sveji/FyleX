@@ -52,8 +52,8 @@ const DocumentPage = () => {
                 setAnalysis(response.data.analysis)
                 setPdfUrl(response.data.document)
                 setKeywords(analysis)
-                console.log(analysis)
-                console.log(response.data.document)
+                // console.log(analysis)
+                // console.log(response.data.document)
             }
         }
 
