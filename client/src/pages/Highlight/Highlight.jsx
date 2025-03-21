@@ -17,7 +17,7 @@ PDFView.propTypes = {
     highlightedText: PropTypes.string.isRequired,
 };
 
-export default function PDFView({ pdfUrl, }) {
+export default function PDFView({ pdfUrl }) {
     // const searchPluginInstance = searchPlugin();
 
 
