@@ -23,6 +23,10 @@ def document(request):
     if request.method == 'POST':
         document = request.FILES.get('document')
         user = request.user
+        name = request.data.get('name')
+
+        if not name:
+            return Response("Error, there is no name!", status=status.HTTP_404_NOT_FOUND)
 
         if not document:
             return Response("Error there is no document!", status=status.HTTP_404_NOT_FOUND)
@@ -59,12 +63,14 @@ def document(request):
             document = document_url,
             analysis = response_data,
             user = user,
+            name = name,
         )
 
         return Response({
             "id": document_object.id,
             "document_url": document_url,
             "analysis": document_object.analysis,
+            "name": document_object.name,
         }, status=status.HTTP_200_OK)
     
     if request.method == 'DELETE':
@@ -92,7 +98,7 @@ def document(request):
         user = request.user
 
         if not document_id:
-            documents = Document.objects.values('id', 'document', 'analysis', 'summary', 'review', "user_id").filter(user = user.id)
+            documents = Document.objects.values('id', 'document', 'analysis', 'summary', 'review', "user_id", "name").filter(user = user.id)
             return Response(list(documents), status=status.HTTP_200_OK)
         
         else:
@@ -108,6 +114,7 @@ def document(request):
                 "summary": document.summary,
                 "review": document.review,
                 "user_id": user.id,
+                "name": document.name,
             })
         
 @api_view(['GET'])
