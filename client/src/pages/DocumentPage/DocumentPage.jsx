@@ -53,7 +53,7 @@ const DocumentPage = () => {
             <AnalysisBox
                 sentences={analysis}
             />
-        </>
+        </div>
     )
 }
 
