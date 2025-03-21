@@ -1,7 +1,4 @@
 import re
-
-
-import re
 import unicodedata
 
 def preprocess_legal_text(text):
