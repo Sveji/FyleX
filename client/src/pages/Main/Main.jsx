@@ -1,4 +1,4 @@
-import Wave from '../../img/wave.svg'
+import wave from '../../img/wave.svg'
 import Upload from '../../img/Group 1.png'
 import './main.less'
 import '../../globalStyling/components.less'
@@ -93,7 +93,7 @@ const Main = () => {
         <section className="section-main">
             <Outlet />
 
-            <img src={Wave} className='wave shadowed-svg' />
+            <img src={wave} className='wave shadowed-svg' />
 
             <div className='text-section'>
                 <div className='title-section'>

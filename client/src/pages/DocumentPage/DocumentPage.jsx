@@ -6,7 +6,7 @@ import Highlight from "../Highlight/Highlight"
 import AssistantBox from "../../components/AssistantBox/AssistantBox"
 import './documentPage.less'
 import Documents from '../YourDocuments/Documents'
-import Wave from '../../img/wave.svg'
+import wave from '../../img/wave.svg'
 import { LuFileText } from "react-icons/lu"
 
 const DocumentPage = () => {
@@ -114,7 +114,7 @@ const DocumentPage = () => {
 
     return (
         <section className="section-doc">
-            <img src={Wave} className='wave' />
+            <img src={wave} className='wave' />
             {
                 error ? 
                 <p className="error">{error}</p>
