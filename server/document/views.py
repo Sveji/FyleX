@@ -40,7 +40,7 @@ def document(request):
         url = 'http://127.0.0.1:7000/api/service/analysis'
 
         data = {
-            "document_url": str(document_url),
+            "url": str(document_url),
         }
 
         headers = {
@@ -62,7 +62,8 @@ def document(request):
 
         return Response({
             "id": document_object.id,
-            "image_url": document_url
+            "image_url": document_url,
+            "analysis": document_object.analysis,
         }, status=status.HTTP_200_OK)
     
     if request.method == 'DELETE':
