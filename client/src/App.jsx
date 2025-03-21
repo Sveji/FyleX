@@ -8,6 +8,7 @@ import Register from "./pages/Register/Register"
 import ActivateMessage from "./pages/ActivateMessage/ActivateMessage"
 import Activate from "./pages/Activate/Activate"
 import Highlight from "./pages/Highlight/Highlight"
+import Nav from "./pages/Nav/Nav"
 
 function App() {
 
@@ -17,6 +18,9 @@ function App() {
       <DataProvider>
 
         <LayoutGrid type='screen' />
+
+        <Nav />
+
 
         <Routes>
 
