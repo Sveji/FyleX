@@ -49,13 +49,16 @@ export default function PDFView({ pdfUrl, keywords = [] }) {
 
     return (
         <div className="border-solid border-2 rounded-md border-slate-300 h-screen w-auto overflow-auto overscroll-contain">
-            <Worker workerUrl={workerUrl} style={styles.page}>
-                <Viewer
-                    style={styles.section}
-                    fileUrl={pdfUrl}
-                    onDocumentLoad={handleDocumentLoad}
-                    plugins={[searchPluginInstance]}
-                />
+            <Worker workerUrl={workerUrl} >
+                <div className="pdf-viewer-container">
+                    <Viewer
+
+                        fileUrl={pdfUrl}
+                        onDocumentLoad={handleDocumentLoad}
+                        plugins={[searchPluginInstance]}
+                    />
+                </div>
+
             </Worker>
         </div>
     );
