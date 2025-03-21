@@ -11,6 +11,7 @@ import EmailMessage from "./components/EmailMessage/EmailMessage"
 import ForgotPass from "./pages/ForgotPass/ForgotPass"
 import Nav from "./pages/Nav/Nav"
 import ResetPass from "./pages/ResetPass/ResetPass"
+import DocumentPage from "./pages/DocumentPage/DocumentPage"
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
 
           <Route path="/highlight" element={<Highlight />} />
           <Route path="/mydocuments" element={<YourDocuments />} />
+          <Route path="/document/:id" element={<DocumentPage />} />
 
         </Routes>
 
