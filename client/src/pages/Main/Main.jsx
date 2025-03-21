@@ -15,10 +15,10 @@ const Main = () => {
 
     console.log(file)
 
-    const clearHandler = () => {
-        setFile(null)
+    // const clearHandler = () => {
+    //     setFile(null)
 
-    }
+    // }
 
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file) => {
