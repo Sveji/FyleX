@@ -48,7 +48,7 @@ const Login = () => {
             localStorage.setItem('access', response.data.token.access)
             setAccess(response.data.token.access)
             localStorage.setItem('refresh', response.data.token.refresh)
-            setAccess(response.data.token.refresh)
+            setRefresh(response.data.token.refresh)
             navigate('/')
         }
     }
