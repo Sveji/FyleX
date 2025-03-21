@@ -103,7 +103,10 @@ const AssistantBox = () => {
 
                 if(data && data.action === "succses") {
                     console.log(data)
-                    
+                    let newArr = [{message: data.question, type: "out"}]
+                    if(data.response_data.answer) newArr = [...newArr, {message: data.response_data.answer.answer, type: "in"}]
+                    setMessages(prev => [...prev, ...newArr])
+                    setCurrMessage("")
                 }
             }
 
@@ -130,6 +133,22 @@ const AssistantBox = () => {
 
 
 
+    // Stores the chat box
+    const chatRef = useRef()
+
+
+
+    // Maintains the scroll position when we load more messages
+    const prevHeightRef = useRef(0)
+    useEffect(() => {
+        if(messages.length) {
+            chatRef.current.scrollTop += chatRef.current.scrollHeight - prevHeightRef.current
+            prevHeightRef.current = chatRef.current.scrollHeight
+        }
+    }, [messages.length])
+
+
+
     return (
         <div className="assistant-box">
             <div className="title-box">
@@ -137,25 +156,23 @@ const AssistantBox = () => {
             </div>
 
             <div className="chat-container">
-                {
-                    messages && messages.length > 0 &&
-                    <div className="messages-container">
-                        <div className="no-more">
-                            <div className="line"></div>
-                            <p>No more messages</p>
-                            <div className="line"></div>
-                        </div>
-                        {
-                            messages.map((message, i) => (
-                                <Message
-                                    key={i}
-                                    message={message.message}
-                                    type={message.type}
-                                />
-                            ))
-                        }
+                <div className="messages-container" ref={chatRef}>
+                    <div className="no-more">
+                        <div className="line"></div>
+                        <p>No more messages</p>
+                        <div className="line"></div>
                     </div>
-                }
+                    {
+                        messages && messages.length > 0 &&
+                        messages.map((message, i) => (
+                            <Message
+                                key={i}
+                                message={message.message}
+                                type={message.type}
+                            />
+                        ))
+                    }
+                </div>
 
                 <div className="input-container">
                     <input
