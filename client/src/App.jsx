@@ -21,7 +21,7 @@ function App() {
 
         <LayoutGrid type='screen' />
 
-        {/* <Nav /> */}
+        <Nav />
 
 
         <Routes>
