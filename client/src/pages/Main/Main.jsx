@@ -12,7 +12,7 @@ import { useDropzone } from 'react-dropzone'
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { DataContext } from '../../context/DataContext'
 import { Link, Outlet } from 'react-router-dom'
-import Highlight from "../Highlight/Highlight"
+
 
 
 const Main = () => {
@@ -38,7 +38,7 @@ const Main = () => {
         console.log(response)
 
         if (response.status == 401) navigate('/login')
-        if (response.status == 200) 
+
     }
 
 
@@ -151,9 +151,7 @@ const Main = () => {
                 </div> */}
             </div>
 
-            {
-                <Highlight />
-            }
+
 
 
 

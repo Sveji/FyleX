@@ -46,7 +46,7 @@ export default function PDFView({ pdfUrl }) {
         <div className="border-solid border-2 rounded-md border-slate-300 h-screen w-auto overflow-auto overscroll-contain">
             <Worker workerUrl={workerUrl}>
                 <Viewer
-                    fileUrl={`https://res.cloudinary.com/djm6yhqvx/raw/upload/v1742524952/hackTues11/uyyfdyzqvgswlhextqxf.pdf`}
+                    fileUrl={pdfUrl}
                     onDocumentLoad={handleDocumentLoad}
                     plugins={[searchPluginInstance]}
                 />
