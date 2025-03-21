@@ -5,6 +5,7 @@ import django
 import base64
 import time
 from urllib.parse import parse_qs
+import httpx
 
 def base64_url_decode(base64_url):
     """Base64 URL decode without any library"""
@@ -79,6 +80,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.channel_layer.group_add(f"document_{chat_name}", self.channel_name)
 
+        self.group_name = f"document_{chat_name}"
+
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -86,7 +89,28 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_discard(group_name, self.channel_name)
 
     async def receive(self, text_data):
-        pass
+        data = json.loads(text_data)
+        action = data.get("action")
+
+        if action == "send_message":
+            message = data.get("message")
+
+            try:
+                data_for_post = json.loads(text_data)
+            except json.JSONDecodeError:
+                await self.send(text_data=json.dumps({"error": "Invalid JSON"}))
+                return
+            
+            response_data = await self.send_post_request(message)
+
+            await self.channel_layer.group_send(
+                self.group_name,
+                {
+                    "type": "send_message_notification",
+                    "message": message,
+                    "response_data": response_data
+                },
+            )
 
     @database_sync_to_async
     def get_document(self, document_id):
@@ -108,3 +132,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         return result
 
+    async def send_message_notification(self, event):
+        await self.send(text_data=json.dumps({
+            "action": "succses",
+            "message": event["message"],
+            "response_data": event["response_data"]
+        }))
+
+    async def send_post_request(self, data):
+        
+        url = ""
+        headers = {"Content-Type": "application/json"}
+
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.post(url, json=data, headers=headers)
+                return response.json()
+            except httpx.HTTPStatusError as e:
+                return {"error": f"HTTP error: {e.response.status_code}"}
+            except httpx.RequestError as e:
+                return {"error": f"Request error: {str(e)}"}
