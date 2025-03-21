@@ -1,5 +1,5 @@
-import '../../globalStyling/variables.less'
-import '../../globalStyling/components.less'
+import '../../../../globalStyling/variables.less'
+import '../../../../globalStyling/components.less'
 
 const Message = ({ message, type = "out" }) => {
     return (

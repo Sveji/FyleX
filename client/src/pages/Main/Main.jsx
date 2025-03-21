@@ -2,8 +2,6 @@ import Wave from '../../img/wave.svg'
 import './main.less'
 import { FileUploader } from "react-drag-drop-files"
 import { useState, useCallback } from "react"
-import { div } from 'three/tsl'
-import { buttonBaseClasses } from '@mui/material'
 
 const Main = () => {
 

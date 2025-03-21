@@ -1,0 +1,39 @@
+@import url('../../globalStyling/variables.less');
+@import url('../../globalStyling/components.less');
+
+.analysis-box {
+    .card();
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    color: var(--primary-tint-30);
+    border-radius: 3rem;
+    flex-grow: 1;
+
+    .text {
+        margin-bottom: 1.6rem;
+    }
+
+    .sentences-container {
+        display: flex;
+        flex-direction: column;
+        gap: 3.2rem;
+
+        .sentence-box {
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+
+            .sentence {
+                font-size: 1.8rem;
+                color: var(--primary-tint-50);
+                background-color: var(--primary-shade-10);
+            }
+
+            .analysis {
+                padding: 0 0.8rem;
+                color: var(--primary-tint-30);
+            }
+        }
+    }
+}
