@@ -43,8 +43,9 @@ def prediction(text):
     
     predictions = (output > 0.5).long()
     
-    sap = {}
+    sap = []
     for i, clause in enumerate(clauses):
-        sap[clause] = predictions[i].item()
+        if predictions[i].item() == 1:
+            sap.append(clause)
 
     return sap
