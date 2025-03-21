@@ -48,6 +48,9 @@ const Register = () => {
         if(response.status == 400) {
             setError(response.response.data.error)
         }
+        if(response.status == 201) {
+            navigate('/activate-message')
+        }
     }
 
 

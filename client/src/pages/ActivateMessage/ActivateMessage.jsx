@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import PopUp from "../../components/PopUp/PopUp"
 import { DataContext } from "../../context/DataContext"
 import { MdOutlineMailOutline } from "react-icons/md"
@@ -7,7 +7,14 @@ import { Link } from "react-router-dom"
 
 const ActivateMessage = () => {
     // Gets global data from the context
-    const { navigate } = useContext(DataContext)
+    const { access, navigate } = useContext(DataContext)
+
+
+
+    // Checks if the user is logged in
+    useEffect(() => {
+        if(access) navigate('/')
+    }, [access])
 
 
 

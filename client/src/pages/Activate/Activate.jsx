@@ -16,7 +16,17 @@ const Activate = () => {
 
 
     // Gets global data from the context
-    const { navigate, crud } = useContext(DataContext)
+    const { access, navigate, crud } = useContext(DataContext)
+
+
+
+    // Checks if the user is logged in
+    useEffect(() => {
+        if(access) navigate('/')
+    }, [access])
+
+
+
 
 
 

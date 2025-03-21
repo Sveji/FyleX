@@ -1,7 +1,21 @@
 import { Link } from "react-router-dom"
 import './account.less'
+import { useContext, useEffect } from "react"
+import { DataContext } from "../../context/DataContext"
 
 const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "", link, error = null }) => {
+    // Gets global data from the context
+    const { access, navigate } = useContext(DataContext)
+
+
+
+    // Checks if the user is logged in
+    useEffect(() => {
+        if(access) navigate('/')
+    }, [access])
+
+
+
     return (
         <div>
             <div className="text-box">
