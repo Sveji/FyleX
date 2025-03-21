@@ -6,6 +6,7 @@ class GPT4Tokenizer:
         self.merges = {}
         self.re = r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+"""
 
+
     def load(self, merges: dict, vocab_size: int):
         self.merges = merges
         self.vocab_size = vocab_size
@@ -28,7 +29,7 @@ class GPT4Tokenizer:
                 i += 1
         return newids
     
-    def fit(self, corpus, vocab_size: int):
+    def fit(self, corpus, vocab_size: int, special_token = True):
         preprocess_corpus = re.findall(self.re, corpus)
         tokenized = [list(x.encode("utf-8")) for x in preprocess_corpus]  
         
@@ -54,10 +55,11 @@ class GPT4Tokenizer:
             
             self.merges[pair] = idx  
 
+        
 
 
     def encode(self, text):
-        tokens = list(text.encode("utf-8"))
+        tokens = list(str(text).encode("utf-8"))
         while len(tokens) >= 2:
             stats = self.get_stats(tokens)
             pair = min(stats, key=lambda p: self.merges.get(p, float("inf")))

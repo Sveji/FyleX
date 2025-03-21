@@ -57,7 +57,7 @@ class Model(nn.Module):
 
     def forward(self, x):
         x = self.input_embedding(x)
-        x = self.pos_enc(x)
+        # x = self.pos_enc(x)
         x = self.att(x)
         return x
     
