@@ -1,6 +1,7 @@
 import Wave from '../../img/wave.svg'
 import Upload from '../../img/Group 1.png'
 import './main.less'
+import '../../globalStyling/components.less'
 import { FileUploader } from "react-drag-drop-files"
 import { useState, useCallback, useEffect, useContext } from "react"
 import PopUp from '../../components/PopUp/PopUp'
@@ -21,9 +22,9 @@ const Main = () => {
 
     // Stores the file input
     const formData = new FormData()
-    
-    
-    
+
+
+
     // Sends the file to the backend
     const sendFile = async () => {
         const response = await crud({
@@ -37,7 +38,7 @@ const Main = () => {
         if(response.status == 401) navigate('/login')
     }
 
-    
+
 
     // Gets the file input
     const onDrop = useCallback((acceptedFiles) => {

@@ -85,8 +85,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        for group_name in self.groups_joined:
-            await self.channel_layer.group_discard(group_name, self.channel_name)
+        await self.channel_layer.group_discard(f"document_{self.group_name}", self.channel_name)
 
     async def receive(self, text_data):
         data = json.loads(text_data)
