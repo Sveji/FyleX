@@ -3,7 +3,7 @@ import Upload from '../../img/Group 1.png'
 import './main.less'
 import '../../globalStyling/components.less'
 import { FileUploader } from "react-drag-drop-files"
-import { useState, useCallback, useEffect, useContext } from "react"
+import { useState, useCallback, useEffect, useContext, useRef } from "react"
 import PopUp from '../../components/PopUp/PopUp'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
@@ -16,21 +16,22 @@ import { Link, Outlet } from 'react-router-dom'
 
 const Main = () => {
     // Gets global data from the context
-    const { crud, navigate } = useContext(DataContext)
+    const { crud, navigate, access } = useContext(DataContext)
 
 
 
     // Stores the file input
-    const formData = new FormData()
+    const formData = useRef(new FormData())
 
 
 
     // Sends the file to the backend
     const sendFile = async () => {
+        console.log(formData.current.get("document"))
         const response = await crud({
             url: '/api/document/',
             method: 'post',
-            body: formData
+            body: formData.current
         })
 
         console.log(response)
@@ -54,7 +55,7 @@ const Main = () => {
             }
 
             reader.readAsArrayBuffer(file)
-            formData.append("document", file)
+            formData.current.append("document", file)
             sendFile()
         })
 
@@ -70,13 +71,16 @@ const Main = () => {
 
 
 
+    // Sends the request when the user logs in
+    useEffect(() => {
+        if(access && formData.current.get("document")) sendFile()
+    }, [access])
+
+
+
     return (
         <section className="section-main">
             <Outlet />
-            {/* <PopUp classes={'account-box'}>
-                <Login />
-                <Register />
-            </PopUp> */}
 
             <img src={Wave} className='wave' />
 
