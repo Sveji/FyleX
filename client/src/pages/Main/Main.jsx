@@ -93,22 +93,15 @@ const Main = () => {
                     access ?
                         <div className='sub-title'>
                             <p>See your documents and analyses</p>
-                            <Link to='/nqmam-oshte' className='login'>here</Link>
+                            <Link to='/mydocuments' className='login'>here</Link>
                         </div>
                         :
                         <div className='sub-title'>
                             <p>Want to save your analysis?</p>
                             <Link to='/login' className='login'>Login</Link>
                         </div>
-                    <div className='sub-title'>
-                        <p>See your documents and analyses</p>
-                        <Link to='/mydocuments' className='login'>here</Link>
-                    </div>
-                    :
-                <div className='sub-title'>
-                    <p>Want to save your analysis?</p>
-                    <Link to='/login' className='login'>Login</Link>
-                </div>
+
+
                 }
             </div>
 
