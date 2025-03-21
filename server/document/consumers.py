@@ -7,12 +7,14 @@ import time
 from urllib.parse import parse_qs
 import httpx
 
+# DECODER
 def base64_url_decode(base64_url):
     """Base64 URL decode without any library"""
     padding = '=' * (4 - (len(base64_url) % 4))  # Add padding
     base64_url = base64_url.replace('-', '+').replace('_', '/')
     return base64.b64decode(base64_url + padding)
 
+# JWT DECODE
 def decode_jwt(jwt):
     """Decode JWT and return the header and payload"""
     try:
@@ -31,6 +33,7 @@ def decode_jwt(jwt):
     except Exception as e:
         return {"error": str(e)}
 
+# CHECK TOKEN VALIDITY
 def check_token_validity(jwt):
     """Check if the JWT token is structurally valid"""
     header, payload = decode_jwt(jwt)
@@ -74,6 +77,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         header, payload = decode_jwt(token)
         self.username = payload.get("username", "guest_user")
 
+        # GET THE DOCUMENT WE ARE GOING TO BE USING AND THE GROUP NAME 
         document_id = int(document_id_str)
         document = await self.get_document(document_id)
         chat_name = await self.generate_name(document)
@@ -93,6 +97,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         action = data.get("action")
 
+        # SEND MESSAGE RECIVER
         if action == "send_message":
             question = data.get("question")
 
@@ -113,6 +118,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 },
             )
 
+    # GET DOCUMENT
     @database_sync_to_async
     def get_document(self, document_id):
         
@@ -122,6 +128,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         except Document.DoesNotExist:
             return None
         
+    # GENERATE NAME
     @database_sync_to_async
     def generate_name(self, document):
         
@@ -133,6 +140,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         return result
 
+    # SEND MESSAGE NOTIFICATION
     async def send_message_notification(self, event):
         await self.send(text_data=json.dumps({
             "action": "succses",
@@ -141,6 +149,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "url": event["url"]
         }))
 
+    # SEND POST REQUEST TO THE MICROSERVICE
     async def send_post_request(self, data):
         
         url = 'http://127.0.0.1:7000/api/service/qa'

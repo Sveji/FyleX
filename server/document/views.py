@@ -1,15 +1,19 @@
-from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 import cloudinary
 import cloudinary.uploader
 from rest_framework import status
 from .models import Document
-from rest_framework.permissions import IsAuthenticated;
+from rest_framework.permissions import IsAuthenticated
 import requests
 import cloudinary.uploader
 
 def get_public_id(document_url):
+
+    """
+    function to get the publick id from a url
+    """
+
     document_url = document_url.split("/")
     joined = f"{document_url[-2]}\\{document_url[-1]}"
     result = joined.split(".")[0]
@@ -20,6 +24,12 @@ def get_public_id(document_url):
 @api_view(['POST', 'DELETE', 'GET'])
 @permission_classes([IsAuthenticated])
 def document(request):  
+
+    """
+    POST, DELETE and GET for the documents to save delite and get the model info
+    cloudinary storage in use
+    """
+
     if request.method == 'POST':
         document = request.FILES.get('document')
         user = request.user
@@ -123,6 +133,11 @@ def document(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_summary(request):
+
+    """
+    view to get the summary from the other microservice for a document(checks if the document is yours too)
+    """
+
     if request.method == 'GET':
         
         user = request.user
@@ -170,6 +185,10 @@ def get_summary(request):
     
 @api_view(['GET'])
 def get_review(request):
+
+    """
+    view to get the review from the other microservice for a document(checks if the document is yours too)
+    """
 
     user = request.user
 

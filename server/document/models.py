@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import CustomUser
 
+# MODEL FOR EVERY DOCUMENT
 class Document(models.Model):
     document = models.URLField(max_length=1000)
     summary = models.TextField(max_length=10000, default = "")
