@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from "react"
 import PopUp from "../../components/PopUp/PopUp"
 import { DataContext } from "../../context/DataContext"
 import { MdOutlineMailOutline } from "react-icons/md"
-import './activateMessage.less'
 import { Link } from "react-router-dom"
 
-const ActivateMessage = () => {
+
+
+const EmailMessage = ({ title, message }) => {
     // Gets global data from the context
     const { access, navigate } = useContext(DataContext)
 
@@ -34,12 +35,12 @@ const ActivateMessage = () => {
         <PopUp classes={'account-box'} shown={shown} onClose={handleClosePopUp}>
             <MdOutlineMailOutline className="icon" />
 
-            <h1>Activate account</h1>
-            <p className="activate-message-text">Click the link we sent on your email to activate your account. Log in once you're done.</p>
+            <h1>{title}</h1>
+            <p className="activate-message-text">{message}</p>
 
             <Link to='/login'><button className="btn">Log in</button></Link>
         </PopUp>
     )
 }
 
-export default ActivateMessage
+export default EmailMessage

@@ -18,30 +18,43 @@
         }
     }
 
+    .input-container {
+        display: flex;
+        gap: 0.4rem;
+        width: 100%;
+
+        input {
+            flex-grow: 1;
+            border-top-right-radius: 0.4rem;
+            border-bottom-right-radius: 0.4rem;
+        }
+
+        .btn {
+            border-radius: 1rem;
+            border-top-left-radius: 0.4rem;
+            border-bottom-left-radius: 0.4rem;
+        }
+    }
+
     .account-form {
         display: flex;
         flex-direction: column;
-        gap: 3.2rem;
+        gap: 1.2rem;
         margin-bottom: 3.2rem;
 
-        input {
-            border: none;
-            background-color: var(--primary-shade-20);
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 2.4rem;
+        }
+
+        .forgot {
+            align-self: end;
+            margin-bottom: 2.4rem;
+            color: var(--primary-tint-30);
             font-family: inherit;
             font-size: 1.6rem;
-            padding: 1.2rem 1.6rem;
-            border-radius: 1rem;
-            color: var(--primary-tint-50);
-            transition: .3s;
-
-            &::placeholder {
-                color: var(--primary-tint-30);
-                position: absolute;
-            }
-
-            &:focus {
-                border: solid 0.1rem var(--primary-tint-10);
-            }
+            padding-right: 0.8rem;
         }
 
         .btn {

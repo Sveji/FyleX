@@ -82,6 +82,7 @@ const Login = () => {
                     route: "/register"
                 }}
                 error={error}
+                forgotPass
             />
         </PopUp>
     )

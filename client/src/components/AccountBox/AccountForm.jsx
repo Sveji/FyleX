@@ -3,7 +3,7 @@ import './account.less'
 import { useContext, useEffect } from "react"
 import { DataContext } from "../../context/DataContext"
 
-const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "", link, error = null }) => {
+const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "", link, error = null, forgotPass = false }) => {
     // Gets global data from the context
     const { access, navigate } = useContext(DataContext)
 
@@ -25,17 +25,24 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
             </div>
 
             <form className="account-form" onSubmit={(e) => handleSubmit(e)}>
+                <div className="input-box">
+                    {
+                        inputs.map((inputField, i) =>(
+                            <input
+                                key={i}
+                                type={inputField.type}
+                                value={inputField.value}
+                                onChange={(e) => inputField.setValue(e.target.value)}
+                                placeholder={inputField.placeholder}
+                            />
+                        ))
+                    }
+                </div>
                 {
-                    inputs.map((inputField, i) =>(
-                        <input
-                            key={i}
-                            type={inputField.type}
-                            value={inputField.value}
-                            onChange={(e) => inputField.setValue(e.target.value)}
-                            placeholder={inputField.placeholder}
-                        />
-                    ))
+                    forgotPass &&
+                    <Link className="forgot">Forgot password?</Link>
                 }
+
                 <button className="btn" type='submit'>{btn}</button>
             </form>
 
