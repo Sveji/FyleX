@@ -1,5 +1,14 @@
 @import url('../../globalStyling/variables.less');
 
+.wave {
+    width: 100vw;
+    object-fit: cover;
+
+    position: fixed;
+    // z-index: -1;
+
+}
+
 .result-container {
     display: flex;
     flex-direction: column;
@@ -8,6 +17,8 @@
     gap: 6rem;
     padding: 10rem @0colIn;
 
+    z-index: 2;
+
     .document-box {
         width: 100%;
         display: flex;
@@ -15,10 +26,14 @@
         gap: 2.9rem; // justify-content: center;
         // background-color: aqua;
 
+        z-index: 2;
+
         .btn-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            z-index: 2;
         }
     }
 
@@ -29,6 +44,8 @@
         padding: 3.7rem 6.4rem;
         gap: 3.5rem;
         width: 100vw;
+
+        z-index: 3;
 
         // border: solid 3px red;
     }

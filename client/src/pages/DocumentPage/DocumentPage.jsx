@@ -6,6 +6,7 @@ import Highlight from "../Highlight/Highlight"
 import AssistantBox from "../../components/AssistantBox/AssistantBox"
 import './documentPage.less'
 import Documents from '../YourDocuments/Documents'
+import Wave from '../../img/wave.svg'
 
 const DocumentPage = () => {
     // Gets global data from the context
@@ -104,27 +105,31 @@ const DocumentPage = () => {
 
 
     return (
-        <div className="result-container">
-            <div className="document-box">
-                <div className="btn-container">
-                    <Documents document={document} />
-                    <button onClick={() => handleSummarize()} className="btn">Summarize</button>
+        <>
+
+            <img src={Wave} className='wave' />
+            <div className="result-container">
+                <div className="document-box">
+                    <div className="btn-container">
+                        <Documents document={document} />
+                        <button onClick={() => handleSummarize()} className="btn">Summarize</button>
+                    </div>
+
+                    {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
                 </div>
 
-                {pdfUrl && <Highlight pdfUrl={pdfUrl} keywords={keywords} />}
+                <div className="boxes">
+                    <AnalysisBox
+                        sentences={analysis}
+                    />
+                    <AssistantBox />
+                </div>
+
+
+
+
             </div>
-
-            <div className="boxes">
-                <AnalysisBox
-                    sentences={analysis}
-                />
-                <AssistantBox />
-            </div>
-
-
-
-
-        </div>
+        </>
     )
 }
 
