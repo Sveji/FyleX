@@ -8,7 +8,14 @@ import { DataContext } from '../../context/DataContext'
 
 const YourDocuments = () => {
     // Gets global data from the context
-    const { crud, access } = useContext(DataContext)
+    const { crud, access, navigate } = useContext(DataContext)
+
+
+
+    // Checks if user is not logged in
+    useEffect(() => {
+        if(!access) navigate('/login')
+    }, [access])
 
 
 

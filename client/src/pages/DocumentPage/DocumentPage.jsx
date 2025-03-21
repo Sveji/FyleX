@@ -15,6 +15,13 @@ const DocumentPage = () => {
 
 
 
+    // Checks if user is not logged in
+    useEffect(() => {
+        if(!access) navigate('/login')
+    }, [access])
+
+
+
     // Gets id from the url
     const { id } = useParams()
 
