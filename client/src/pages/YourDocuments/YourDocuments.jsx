@@ -48,6 +48,7 @@ const YourDocuments = () => {
 
                 <div className='documents'>
                     {
+                        documents.length > 0 &&
                         documents.map((document, i) => (
                             <Documents document={document} key={i} />
                         ))

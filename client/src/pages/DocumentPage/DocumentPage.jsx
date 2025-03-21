@@ -18,6 +18,11 @@ const DocumentPage = () => {
 
 
 
+    // Stores the document
+    const [document, setDocument] = useState({})
+
+
+
     // Stores the analysis
     const [analysis, setAnalysis] = useState([])
 
@@ -49,6 +54,7 @@ const DocumentPage = () => {
                 const analysis = response.data.analysis.map((text) => {
                     return text.trim()
                 })
+                setDocument(response.data)
                 setAnalysis(response.data.analysis)
                 setPdfUrl(response.data.document)
                 setKeywords(analysis)
@@ -101,7 +107,7 @@ const DocumentPage = () => {
         <div className="result-container">
             <div className="document-box">
                 <div className="btn-container">
-                    <Documents />
+                    <Documents document={document} />
                     <button onClick={() => handleSummarize()} className="btn">Summarize</button>
                 </div>
 

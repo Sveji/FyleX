@@ -9,6 +9,7 @@ const Documents = ({ document }) => {
     // Gets global data from the context
     const { navigate } = useContext(DataContext)
 
+    console.log(document)
 
 
     return (
@@ -17,8 +18,7 @@ const Documents = ({ document }) => {
                 <div className="file">
                     <LuFileText className="icon" size={32} color={"#000000"} fill={"#7E4F83"} />
                     <div className="file-title">
-                        <p className="title">MikiEPrasence.pdf</p>
-                        <div classname="p1" >32 TB</div>
+                        <p className="title">{document.name}</p>
                     </div>
 
                 </div>
