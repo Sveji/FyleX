@@ -6,7 +6,7 @@ import cloudinary.uploader
 from rest_framework import status
 from .models import Document
 from rest_framework.permissions import IsAuthenticated;
-
+import requests
 import cloudinary.uploader
 
 def get_public_id(document_url):
@@ -19,7 +19,7 @@ def get_public_id(document_url):
 
 @api_view(['POST', 'DELETE', 'GET'])
 @permission_classes([IsAuthenticated])
-def document(request):
+def document(request):  
     if request.method == 'POST':
         document = request.FILES.get('document')
 
@@ -76,3 +76,31 @@ def document(request):
                 "id": document.id,
                 "document": document.document
             })
+        
+@api_view(['GET'])
+def get_summary(request):
+    if request.method == 'GET':
+        
+        document_id = request.query_params.get('document_id')
+
+        if not document_id:
+            return Response("Error no id given!", status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            document = Document.objects.get(id = document_id)
+        except Document.DoesNotExist:
+            return Response("Error no object found!", status=status.HTTP_400_BAD_REQUEST)
+        
+        url = ''
+
+        data = {
+            "document_url": document.document,
+        }
+
+        headers = {
+            "Content-Type": "application/json",
+        }
+
+        response = requests.post(url, json = data, headers = headers)
+
+        return Response(response)
