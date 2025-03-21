@@ -10,6 +10,7 @@ import Highlight from "./pages/Highlight/Highlight"
 import EmailMessage from "./components/EmailMessage/EmailMessage"
 import ForgotPass from "./pages/ForgotPass/ForgotPass"
 import Nav from "./pages/Nav/Nav"
+import ResetPass from "./pages/ResetPass/ResetPass"
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
 
             <Route path="forgot-pass" element={<ForgotPass />} />
             <Route path="forgot-pass-message" element={<EmailMessage title="Forgot password" message="Click the link we sent on your email to reset your password. Log in once you're done." />} />
+            <Route path="reset-password/:uidb/:token" element={<ResetPass />} />
 
           </Route>
 

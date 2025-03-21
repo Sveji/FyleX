@@ -36,7 +36,7 @@ const Main = () => {
 
         console.log(response)
 
-        if(response.status == 401) navigate('/login')
+        if (response.status == 401) navigate('/login')
     }
 
 
@@ -73,7 +73,7 @@ const Main = () => {
 
     // Sends the request when the user logs in
     useEffect(() => {
-        if(access && formData.current.get("document")) sendFile()
+        if (access && formData.current.get("document")) sendFile()
     }, [access])
 
 
@@ -82,7 +82,7 @@ const Main = () => {
         <section className="section-main">
             <Outlet />
 
-            <img src={Wave} className='wave' />
+            <img src={Wave} className='wave shadowed-svg' />
 
             <div className='text-section'>
                 <div className='title-section'>
@@ -91,15 +91,17 @@ const Main = () => {
                 </div>
                 {
                     access ?
-                    <div className='sub-title'>
-                        <p>See your documents and analyses</p>
-                        <Link to='/nqmam-oshte' className='login'>here</Link>
-                    </div>
-                    :
-                    <div className='sub-title'>
-                        <p>Want to save your analysis?</p>
-                        <Link to='/login' className='login'>Login</Link>
-                    </div>
+                        <div className='sub-title'>
+                            <p>See your documents and analyses</p>
+                            <Link to='/mydocuments' className='login'>here</Link>
+                        </div>
+                        :
+                        <div className='sub-title'>
+                            <p>Want to save your analysis?</p>
+                            <Link to='/login' className='login'>Login</Link>
+                        </div>
+
+
                 }
             </div>
 
