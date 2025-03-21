@@ -86,7 +86,7 @@ def document(request):
         document_id = request.query_params.get('id')
         
         if not document_id:
-            documents = Document.objects.values('id', 'document', 'analisys', 'summary', 'review')
+            documents = Document.objects.values('id', 'document', 'analysis', 'summary', 'review')
             return Response(list(documents), status=status.HTTP_200_OK)
         
         else:
@@ -95,7 +95,7 @@ def document(request):
             return Response({
                 "id": document.id,
                 "document": document.document,
-                "analisys": document.analisys,
+                "analysis": document.analysis,
                 "summary": document.summary,
                 "review": document.review,
             })
