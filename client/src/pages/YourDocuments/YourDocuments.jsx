@@ -1,6 +1,8 @@
 import './yourdocuments.less'
 import Documents from './Documents'
 import Wave from '../../img/Wave.svg'
+import { FaArrowLeft } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 const YourDocuments = () => {
 
@@ -20,6 +22,7 @@ const YourDocuments = () => {
                     <Documents />
                     <Documents />
                 </div>
+                <div><Link to='/'><FaArrowLeft color='#C8B3CA' /></Link></div>
             </section>
         </>
     )
