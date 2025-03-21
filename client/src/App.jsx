@@ -20,7 +20,6 @@ function App() {
     <BrowserRouter>
 
       <DataProvider>
-        <GoogleOAuthProvider>
 
           <LayoutGrid type='screen' />
 
@@ -48,7 +47,6 @@ function App() {
             <Route path="/document/:id" element={<DocumentPage />} />
 
           </Routes>
-        </GoogleOAuthProvider>
 
       </DataProvider>
 
