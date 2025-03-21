@@ -3,15 +3,9 @@ import base64
 import time
 import re
 import email
-import pickle
-import json
-import uuid
-import socket
-import threading
 from email import policy
 from email.parser import BytesParser
 from datetime import datetime
-from http.server import HTTPServer, BaseHTTPRequestHandler
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -20,68 +14,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-# We need these scopes for push notifications and reading emails
-SCOPES = [
-    "https://www.googleapis.com/auth/gmail.readonly",
-    "https://www.googleapis.com/auth/gmail.metadata"
-]
-
-# File to store processed message IDs
-PROCESSED_IDS_FILE = "processed_emails.pkl"
-
-# Your domain for push notifications - update this to your actual domain or IP
-# For local testing, you can use ngrok to expose your local server
-DOMAIN = "194.141.252.114"  # or use your public IP or ngrok URL
-PORT = 8080
-NOTIFICATION_TOPIC = f"projects/gmail-notifications-{uuid.uuid4()}"
-
-
-class NotificationHandler(BaseHTTPRequestHandler):
-    """Handler for Gmail push notifications."""
-
-    def do_POST(self):
-        """Handle POST requests from Gmail push notifications."""
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-
-        try:
-            # Parse the notification data
-            notification = json.loads(post_data)
-
-            # Respond with 200 OK to acknowledge receipt
-            self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(b'OK')
-
-            # Process the notification in a separate thread
-            threading.Thread(target=self.process_notification, args=(notification,)).start()
-
-        except Exception as e:
-            print(f"Error handling notification: {e}")
-            self.send_response(500)
-            self.end_headers()
-
-    def process_notification(self, notification):
-        """Process the Gmail notification data."""
-        try:
-            # Extract message data if available
-            data = notification.get('message', {}).get('data', '')
-            if data:
-                # Data is base64-encoded
-                decoded_data = base64.b64decode(data).decode('utf-8')
-                data_json = json.loads(decoded_data)
-
-                # Check if it's an email notification
-                if 'emailAddress' in data_json:
-                    # Get the historyId from the notification
-                    history_id = data_json.get('historyId')
-                    if history_id:
-                        print(f"Received notification with historyId: {history_id}")
-                        # Retrieve the new messages
-                        check_for_new_emails(history_id)
-        except Exception as e:
-            print(f"Error processing notification data: {e}")
+# Using a more permissive scope to access message content and attachments
+SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 
 
 def get_credentials():
@@ -247,131 +181,64 @@ def save_attachment(file_data, filename):
     return filepath
 
 
-def load_processed_ids():
-    """Load the set of already processed message IDs from disk."""
-    if os.path.exists(PROCESSED_IDS_FILE):
-        try:
-            with open(PROCESSED_IDS_FILE, "rb") as f:
-                return pickle.load(f)
-        except Exception as e:
-            print(f"Error loading processed IDs: {e}")
-    return set()
-
-
-def save_processed_ids(processed_ids):
-    """Save the set of processed message IDs to disk."""
+def get_inbox_messages(service, max_results=10, query="in:inbox", last_history_id=None):
+    """Gets messages from the inbox with optional filtering by historyId."""
     try:
-        with open(PROCESSED_IDS_FILE, "wb") as f:
-            pickle.dump(processed_ids, f)
-    except Exception as e:
-        print(f"Error saving processed IDs: {e}")
-
-
-def setup_push_notifications(service, user_id="me"):
-    """Set up Gmail API push notifications."""
-    try:
-        # Define a new push notification
-        body = {
-            'labelIds': ['INBOX'],
-            'topicName': NOTIFICATION_TOPIC,
-            'labelFilterAction': 'include'
-        }
-
-        # Register the watch on the user's inbox
-        result = service.users().watch(userId=user_id, body=body).execute()
-
-        # Check the result
-        historyId = result.get('historyId')
-        expiration = result.get('expiration')
-
-        print(f"Push notifications set up successfully!")
-        print(f"History ID: {historyId}")
-        print(f"Expiration: {datetime.fromtimestamp(int(expiration) / 1000)}")
-
-        return historyId
-
-    except HttpError as error:
-        print(f"An error occurred setting up push notifications: {error}")
-        return None
-
-
-def fetch_history(service, start_history_id, user_id="me"):
-    """Fetch history of changes since the start_history_id."""
-    try:
-        history_list = service.users().history().list(
-            userId=user_id,
-            startHistoryId=start_history_id,
-            historyTypes=['messageAdded']
+        # Get list of messages
+        results = service.users().messages().list(
+            userId="me",
+            q=query,
+            maxResults=max_results
         ).execute()
 
-        # Extract added message IDs
-        messages = []
-        if 'history' in history_list:
-            for history in history_list['history']:
-                if 'messagesAdded' in history:
-                    for message in history['messagesAdded']:
-                        # Get the message ID
-                        msg_id = message['message']['id']
-                        messages.append(msg_id)
+        messages = results.get("messages", [])
 
-        return messages
+        if not messages:
+            return [], last_history_id
+
+        # Filter by historyId if provided
+        if last_history_id:
+            # Get only messages with a higher historyId
+            new_messages = []
+            for message in messages:
+                msg_data = service.users().messages().get(
+                    userId="me",
+                    id=message["id"],
+                    format="minimal"
+                ).execute()
+
+                if int(msg_data["historyId"]) > last_history_id:
+                    new_messages.append(message)
+
+            messages = new_messages
+
+        # Get full details for each message
+        email_data = []
+        new_history_id = last_history_id
+
+        for message in messages:
+            msg_id = message["id"]
+            email_content = get_email_content(service, msg_id)
+
+            if email_content:
+                email_data.append(email_content)
+
+                # Update history ID to track the latest message
+                msg_data = service.users().messages().get(
+                    userId="me",
+                    id=msg_id,
+                    format="minimal"
+                ).execute()
+
+                current_history_id = int(msg_data["historyId"])
+                if not new_history_id or current_history_id > new_history_id:
+                    new_history_id = current_history_id
+
+        return email_data, new_history_id
 
     except HttpError as error:
-        print(f"An error occurred fetching history: {error}")
-        return []
-
-
-def check_for_new_emails(history_id=None):
-    """Check for new emails using the Gmail API."""
-    try:
-        # Get credentials and build service
-        creds = get_credentials()
-        service = build("gmail", "v1", credentials=creds)
-
-        # Load processed message IDs
-        processed_ids = load_processed_ids()
-
-        # If no history_id provided, get the latest messages directly
-        if not history_id:
-            # Get list of messages
-            results = service.users().messages().list(
-                userId="me",
-                q="in:inbox",
-                maxResults=10
-            ).execute()
-
-            messages = results.get("messages", [])
-            msg_ids = [msg['id'] for msg in messages]
-        else:
-            # Use history to get new message IDs
-            msg_ids = fetch_history(service, history_id)
-
-        # Filter out already processed messages
-        new_msg_ids = [msg_id for msg_id in msg_ids if msg_id not in processed_ids]
-
-        if not new_msg_ids:
-            return
-
-        # Fetch and process new emails
-        new_emails = []
-        for msg_id in new_msg_ids:
-            email_content = get_email_content(service, msg_id)
-            if email_content:
-                new_emails.append(email_content)
-                # Mark as processed
-                processed_ids.add(msg_id)
-
-        # Display new emails
-        if new_emails:
-            print(f"Found {len(new_emails)} new email(s)!")
-            for email in new_emails:
-                display_email(email)
-
-            # Save updated processed IDs
-            save_processed_ids(processed_ids)
-
-    except Exception as e:
-        print(f"Error checking for new emails: {e}")
+        print(f"An error occurred: {error}")
+        return [], last_history_id
 
 
 def display_email(email):
@@ -402,48 +269,58 @@ def display_email(email):
     print("=" * 80)
 
 
-def run_notification_server():
-    """Run the HTTP server to receive push notifications."""
-    server_address = ('', PORT)
-    httpd = HTTPServer(server_address, NotificationHandler)
-    print(f"Starting notification server on port {PORT}...")
-    httpd.serve_forever()
-
-
 def main():
-    """Main function to set up Gmail push notifications and listen for updates."""
-    try:
-        # Get credentials and build service
-        creds = get_credentials()
-        service = build("gmail", "v1", credentials=creds)
+    """Main function to continuously monitor Gmail for new emails."""
+    last_history_id = None
+    check_interval = 60  # Check every minute (60 seconds)
 
-        # Load processed message IDs
-        processed_ids = load_processed_ids()
-        print(f"Loaded {len(processed_ids)} previously processed email IDs")
+    print("Starting Gmail Monitor...")
+    print("Waiting for new emails...")
 
-        # Start notification server in a separate thread
-        server_thread = threading.Thread(target=run_notification_server, daemon=True)
-        server_thread.start()
+    while True:
+        try:
+            # Get credentials (will refresh if needed)
+            creds = get_credentials()
 
-        # Set up push notifications
-        history_id = setup_push_notifications(service)
-        if not history_id:
-            print("Failed to set up push notifications. Falling back to periodic checking.")
+            # Build the Gmail service
+            service = build("gmail", "v1", credentials=creds)
 
-        # Initial check for new emails
-        print("Checking for new emails...")
-        check_for_new_emails()
+            # Get profile info to get the initial historyId if needed
+            if last_history_id is None:
+                profile = service.users().getProfile(userId="me").execute()
+                last_history_id = int(profile["historyId"])
+                print(f"Initial history ID: {last_history_id}")
 
-        print("Gmail Listener is now running. Press Ctrl+C to exit.")
+            # Get new messages from inbox
+            emails, new_history_id = get_inbox_messages(
+                service,
+                max_results=10,
+                last_history_id=last_history_id
+            )
 
-        # Keep the main thread alive
-        while True:
-            time.sleep(1)
+            # Process new emails
+            if emails:
+                print(f"Found {len(emails)} new email(s)!")
+                for email in emails:
+                    display_email(email)
 
-    except KeyboardInterrupt:
-        print("Exiting Gmail Listener...")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
+            # Update last history ID
+            if new_history_id and new_history_id != last_history_id:
+                last_history_id = new_history_id
+
+            # Wait before checking again
+            time.sleep(check_interval)
+
+        except HttpError as error:
+            print(f"An error occurred: {error}")
+            time.sleep(60)  # Wait a bit before retrying on error
+        except KeyboardInterrupt:
+            print("Exiting Gmail Monitor...")
+            break
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            print("Waiting before retry...")
+            time.sleep(60)
 
 
 if __name__ == "__main__":
