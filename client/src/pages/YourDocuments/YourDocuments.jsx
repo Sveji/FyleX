@@ -2,6 +2,8 @@ import './yourdocuments.less'
 import Documents from './Documents'
 import Wave from '../../img/Wave.svg'
 import { useContext, useEffect, useState } from 'react'
+import { FaArrowLeft } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 import { DataContext } from '../../context/DataContext'
 
 const YourDocuments = () => {
@@ -29,8 +31,7 @@ const YourDocuments = () => {
             }
         }
 
-
-        if(access) handleGetDocuments()
+        if (access) handleGetDocuments()
     }, [access])
 
 
@@ -52,6 +53,7 @@ const YourDocuments = () => {
                         ))
                     }
                 </div>
+                <div><Link to='/'><FaArrowLeft color='#C8B3CA' /></Link></div>
             </section>
         </>
     )
