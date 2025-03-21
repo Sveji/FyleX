@@ -27,6 +27,9 @@ const DocumentPage = () => {
     //Stores the highlites
     const [keywords, setKeywords] = useState(null)
 
+    //Store review response
+    const [review, setReview] = useState(null)
+
 
 
     // Gets the document from the backend
@@ -54,7 +57,20 @@ const DocumentPage = () => {
             }
         }
 
-        if (id) handleGetDocument()
+        const handleGetReviews = async () => {
+            const response = await crud({
+                url: `/api/document/review/?document_id=${id}`,
+                method: 'get'
+            })
+
+            // setReview(response.)
+            console.log(response)
+        }
+
+        if (id) {
+            handleGetDocument()
+            handleGetReviews()
+        }
     }, [id])
 
 
@@ -69,6 +85,16 @@ const DocumentPage = () => {
         console.log(response)
     }
 
+    // Get review
+    const handleReview = async () => {
+        const response = await crud({
+            url: `/api/document/review/?document_id=${id}/`,
+            method: 'get'
+        })
+
+        // setReview(response.)
+        console.log(response)
+    }
 
 
     return (
