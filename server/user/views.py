@@ -284,6 +284,7 @@ def google_login(request):
     user, created = CustomUser.objects.get_or_create(email=idinfo['email'], username = idinfo['name'])
     refresh = RefreshToken.for_user(user)
     user.is_active = True
+    user.save()
     return Response({
         'refresh': str(refresh),
         'access': str(refresh.access_token),
