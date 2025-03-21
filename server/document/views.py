@@ -22,6 +22,7 @@ def get_public_id(document_url):
 def document(request):  
     if request.method == 'POST':
         document = request.FILES.get('document')
+        user = request.user
 
         if not document:
             return Response("Error there is no document!", status=status.HTTP_404_NOT_FOUND)
@@ -49,7 +50,6 @@ def document(request):
 
         response = requests.post(url, json = data)
 
-        print(response.status_code)
         if response.status_code == 200:
             response_data = response.json()
         else:
@@ -58,11 +58,12 @@ def document(request):
         document_object = Document.objects.create(
             document = document_url,
             analysis = response_data,
+            user = user,
         )
 
         return Response({
             "id": document_object.id,
-            "image_url": document_url,
+            "document_url": document_url,
             "analysis": document_object.analysis,
         }, status=status.HTTP_200_OK)
     
