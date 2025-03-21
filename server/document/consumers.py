@@ -97,10 +97,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             question = data.get("question")
 
             data_for_post = {
-                "question": question,
                 "url": self.document.document,
+                "question": question,
             }
-            
+
             response_data = await self.send_post_request(data_for_post)
 
             await self.channel_layer.group_send(
@@ -143,12 +143,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def send_post_request(self, data):
         
-        url = ""
-        headers = {"Content-Type": "application/json"}
+        url = 'http://127.0.0.1:7000/api/service/qa'
 
         async with httpx.AsyncClient() as client:
             try:
-                response = await client.post(url, json=data, headers=headers)
+                response = await client.post(url, json=data)
                 return response.json()
             except httpx.HTTPStatusError as e:
                 return {"error": f"HTTP error: {e.response.status_code}"}
