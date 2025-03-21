@@ -1,14 +1,17 @@
 import Wave from '../../img/wave.svg'
+import Upload from '../../img/Group 1.png'
 import './main.less'
 import { FileUploader } from "react-drag-drop-files"
 import { useState, useCallback } from "react"
-import { div } from 'three/tsl'
-import { buttonBaseClasses } from '@mui/material'
+import { ImPriceTag } from 'react-icons/im'
+import { useDropzone } from 'react-dropzone'
+import { MdOutlineCloudUpload } from "react-icons/md";
+
 
 const Main = () => {
 
     const [file, setFile] = useState()
-    // const []
+
 
     console.log(file)
 
@@ -16,6 +19,30 @@ const Main = () => {
         setFile(null)
 
     }
+
+    const onDrop = useCallback((acceptedFiles) => {
+        acceptedFiles.forEach((file) => {
+            const reader = new FileReader()
+
+            reader.onabort = () => console.log('file reading was aborted')
+            reader.onerror = () => console.log('file reading has failed')
+            reader.onload = () => {
+                // Do whatever you want with the file contents
+                const binaryStr = reader.result
+                console.log(binaryStr)
+            }
+            reader.readAsArrayBuffer(file)
+        })
+
+    }, [])
+
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        accept: {
+            'application/pdf': ['.pdf', '.docx', '.txt']
+        }
+
+    })
 
     return (
         <section className="section-main">
@@ -32,21 +59,48 @@ const Main = () => {
                 </div>
             </div>
 
+
+
             <div className='scan-section'>
                 <div className='content'>
-                    <FileUploader
+                    <div className='uploading' {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <div className='inside'>
+                            <img src={Upload} alt="" />
+                            <div className='text'>
+                                <div className='container-text'>
+                                    <p>Drag and drop</p>
+                                    <p className='purple'>your files here</p>
+                                </div>
+                                <p> or</p>
+
+                                <div className='upload-icon-container'>
+                                    <MdOutlineCloudUpload size={32} />
+                                    <p>Upload document</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    {/* <FileUploader
+                        dropMessageStyle={{ backgroundColor: 'red' }}
+                        // style={{
+                        //     border: "2px dashed #916895",
+                        // }}
+                        classes="drop_zone"
                         multiple={false}
                         name="file"
                         type={["pdf", "txt", "docx"]}
                         handleChange={(file) => setFile(file)}
-                    />
+                    /> */}
                 </div>
-                <div className='uploaded'>
-                    {file ? `File name: ${file.name}` : 'No file uploaded yet!'}
+                {/* <div className='uploaded'>
+                    <p>{file ? `File name: ${file.name}` : 'No file uploaded yet!'}</p>
                 </div>
                 <div className='btn'>
                     <button cnClick={clearHandler} >Cancel</button>
-                </div>
+                </div> */}
             </div>
 
         </section>
