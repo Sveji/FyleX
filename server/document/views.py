@@ -52,7 +52,7 @@ def document(request):
         
         document_url = upload_result['secure_url']
 
-        url = 'http://127.0.0.1:7000/api/service/analysis'
+        url = 'http://ml:5320//api/service/analysis'
 
         data = {
             "url": str(document_url),
