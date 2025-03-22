@@ -12,12 +12,40 @@
             grid-template-columns: 1fr 1fr;
         }
     }
+
+    .section-doc {
+        padding: 9.6rem @1colIn;
+
+        .result-container {
+            .documents-container {
+                flex-direction: column;
+
+                .summary-box {
+                    width: 100%;
+                }
+            }
+        }
+
+        .boxes {
+            flex-direction: column;
+
+
+        }
+    }
+
+    .analysis-box, .assistant-box {
+        width: 100%;
+    }
 }
 
 @media (max-width: 960px) {
     :root {
         --grid-padding: 3.2rem;
         --grid-columns: 6;
+    }
+
+    .section-doc {
+        padding: 9.6rem @0colIn;
     }
 
     .scan-section {

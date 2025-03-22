@@ -118,12 +118,13 @@ const DocumentPage = () => {
                         </div>
 
                         {
-                            summary &&
+                            true &&
                             <div className="summary-box">
                                 <div className="title-box">
                                     <h1>Summary</h1>
                                 </div>
-                                <p className="summary">{summary}</p>
+                                {/* <p className="summary">{summary}</p> */}
+                                <p className="summary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora fugit minima dolorum exercitationem officia optio maiores magni quas fugiat excepturi? Beatae dolore et enim aliquam debitis cumque corporis ab quis magnam nemo, facere nulla odio. Dolorum dignissimos explicabo velit harum debitis accusantium iste nam quos, repellat ullam ea neque animi ex amet possimus iusto recusandae aperiam, corporis sit. Sit reprehenderit modi deserunt harum numquam quos iste, tempora cupiditate, voluptatibus earum, exercitationem repellat sequi autem ab voluptas molestias natus a reiciendis.</p>
                             </div>
                         }
                     </div>
