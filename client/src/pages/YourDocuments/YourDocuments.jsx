@@ -1,6 +1,6 @@
 import './yourdocuments.less'
 import Documents from './Documents'
-import wave from '../../img/Wave.svg'
+import wave from '../../img/wave.svg'
 import { useContext, useEffect, useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa6";
 import { Link } from 'react-router-dom';

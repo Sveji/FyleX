@@ -1,0 +1,45 @@
+
+services:
+  ml:
+    build:
+      context: ./ml    # ML service folder
+      dockerfile: Dockerfile
+    container_name: ml
+    ports:
+      - "5320:5320"
+    env_file:
+      - ./ml/.env
+    networks:
+      - my_network
+
+  server:
+    build:
+      context: ./server    # Server (Django) service folder
+      dockerfile: Dockerfile
+    container_name: server
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ml
+    env_file:
+      - ./server/.env
+    networks:
+      - my_network
+
+  client:
+    build:
+      context: ./client    # Client (FE) service folder
+      dockerfile: Dockerfile
+    container_name: client_fe
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    env_file:
+      - ./client/.env
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

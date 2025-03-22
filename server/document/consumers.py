@@ -152,7 +152,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # SEND POST REQUEST TO THE MICROSERVICE
     async def send_post_request(self, data):
         
-        url = 'http://127.0.0.1:7000/api/service/qa'
+        url = 'http://ml:5320//api/service/qa'
 
         async with httpx.AsyncClient() as client:
             try:
