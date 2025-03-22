@@ -17,6 +17,7 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
 
 
 
+    // Sends a request to the backend to make a google login
     const handleGoogleLoginSuccess = async (credentialResponse) => {
         const token = credentialResponse.credential;
         console.log(token)
@@ -42,6 +43,9 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
         }
     };
 
+
+
+    // Handles a google login error
     const handleGoogleLoginFailure = () => {
         error = 'Google Login failed';
     };

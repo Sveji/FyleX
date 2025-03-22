@@ -15,7 +15,7 @@ const AnalysisBox = ({ text = "Here are some parts of your document that you mig
                     sentences && sentences.length > 0 &&
                     sentences.map((sentence, i) => (
                         <div key={i} className="sentence-box">
-                            <p className="sentence">{sentence['suspicious text']}</p>
+                            <p className="sentence">{sentence.suspicious}</p>
                             <p className="analysis">{sentence.explanation}</p>
                         </div>
                     ))

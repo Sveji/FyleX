@@ -18,7 +18,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
 [![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
@@ -34,12 +33,12 @@
 <!-- TABLE OF CONTENTS -->
 
 <details>
-  <summary>Таблица със съдържание</summary>
+  <summary>Table of Content</summary>
   <ol>
     <li>
-      <a href="#about-the-project">За проекта</a>
+      <a href="#about-the-project">About the Project</a>
       <ul>
-        <li><a href="#built-with">Направено с: </a></li>
+        <li><a href="#built-with">Made with: </a></li>
       </ul>
     </li>
     <li>
@@ -59,7 +58,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## За проекта
+## About the Project
 
 FyleX е твоят умен асистент за разпознаване на нередности в документи. Нашият екип се фокусира върху финансите – защото, нека бъдем честни, кой всъщност чете дребния шрифт?
 
@@ -71,9 +70,7 @@ FyleX е твоят умен асистент за разпознаване на
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Направено със
-
-## Направено със
+## Made with
 
 - ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 - ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
@@ -84,117 +81,70 @@ FyleX е твоят умен асистент за разпознаване на
 - ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 - ![Hugging Face](https://img.shields.io/badge/HuggingFace-FFCC4D?style=for-the-badge&logo=huggingface&logoColor=black)
 - ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+- ![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
+
   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
-## Начин на стартиране
+## Getting Started
 
-### Предпоставки
+### Prerequisites
 
 * **Npm and Node**
   Download from [nodejs.org](https://nodejs.org/).
 * **Python and pip**
   Download from [python.org](https://www.python.org/downloads/).
+* **Docker**
+  Download from [docker.com](https://www.docker.com/).
 
-### Installation
+# Installation
 
-### 1. Clone the repo
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Sveji/FyleX.git
+   cd FyleX/
+    ```
+2. Set up a virtual environment
+   ```sh
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+## Installation with Docker
 
-```sh
-     git clone https://github.com/Sveji/Sukar-Marshrutar.git
-     cd Sukar-Marshrutar
-```
+1. Navigate to the ml folder and set up the .env file
+   ```sh
+   cd ml/
+   cp .env.example .env
+   ```
+2. Go back to the root directory
+   ```sh
+    cd ../
+    ```
+3. Navigate to the server folder and set up the .env file
 
-```sh
+    ```sh
+    cd server/
+    cp .env.example .env
+    ```
+4. Go back to the root directory
+5. Navigate to the client folder and set up the .env file
+   ```sh
+   cd client/
+   cp .env.example .env
+   ```
+6. Go back to the root directory
+   ```sh
+    cd ../
+    ```
+7. Compose the Docker containers
+8. ```sh
+    docker-compose up --build -d
+    ```
+9. The frontend will be available at http://localhost:3000
 
-# Install required packages
-   pip install -r requirements.txt
 
-```
-   
-### 2. Setup React
-  
-```sh
-   # Navigate to client directory
-   
-   cd client
-```
-
-```sh
-   # Install NPM packages
-
-   npm install
-```
-
-```sh
-   # Create and configure .env file
-
-   VITE_GOOGLE_API_KEY = ""
-
-```
-
-```sh
-   # Start the Vite development server
-
-   npm run dev
-```
-
-### 3. Setup the Django backend
-
-```sh
-   # Navigate to the server directory
-   
-   cd ../server
-```
-
-```sh
-   # Create and configure the .env file with the following content
-
-    DJANGO_SECRET_KEY = ''
-
-    DJANGO_DEBUG=True
-
-    DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
-
-    DB_NAME=""
-    DB_USER=""        
-    DB_PASSWORD="" 
-    DB_HOST=""
-    DB_PORT=""
-
-    GOOGLE_MAPS_API_KEY = ''
-
-    EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-    EMAIL_HOST=smtp.gmail.com
-    EMAIL_PORT=587
-    EMAIL_USE_TLS=True
-    EMAIL_HOST_USER=''
-    EMAIL_HOST_PASSWORD=''
-    DEFAULT_FROM_EMAIL=''
-
-```
-
-```sh
-   # Run the Django development server
-
-   daphne -b 0.0.0.0 -p 8000 server.asgi:application
-
-```
-### 4. Setup FastAPI microservice
-  
-```sh
-   # Navigate to api directory
-   
-   cd ml/api
-```
-
-```sh
-   # Run the api using uvicorn
-
-   uvicorn main:app --reload --port=7000
-```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
@@ -220,7 +170,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/SookX/Menty.svg?style=for-the-badge
+
 [contributors-url]: https://github.com/Sveji/FyleX/graphs/contributors
 [license-shield]: https://img.shields.io/github/license/Sveji/FyleX.svg?style=for-the-badge
 [license-url]: hhttps://github.com/Sveji/FyleX/blob/master/LICENSE.txt
