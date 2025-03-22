@@ -18,7 +18,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
 [![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
@@ -34,12 +33,12 @@
 <!-- TABLE OF CONTENTS -->
 
 <details>
-  <summary>Таблица със съдържание</summary>
+  <summary>Table of Content</summary>
   <ol>
     <li>
-      <a href="#about-the-project">За проекта</a>
+      <a href="#about-the-project">About the Project</a>
       <ul>
-        <li><a href="#built-with">Направено с: </a></li>
+        <li><a href="#built-with">Made with: </a></li>
       </ul>
     </li>
     <li>
@@ -59,7 +58,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## За проекта
+## About the Project
 
 FyleX е твоят умен асистент за разпознаване на нередности в документи. Нашият екип се фокусира върху финансите – защото, нека бъдем честни, кой всъщност чете дребния шрифт?
 
@@ -71,7 +70,7 @@ FyleX е твоят умен асистент за разпознаване на
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Направено със
+## Made with
 
 - ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 - ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
@@ -89,9 +88,9 @@ FyleX е твоят умен асистент за разпознаване на
 
 <!-- GETTING STARTED -->
 
-## Начин на стартиране
+## Getting Started
 
-### Предпоставки
+### Prerequisites
 
 * **Npm and Node**
   Download from [nodejs.org](https://nodejs.org/).
