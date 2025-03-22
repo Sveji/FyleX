@@ -2,10 +2,11 @@ import { Link } from "react-router-dom"
 import './account.less'
 import { useContext, useEffect } from "react"
 import { DataContext } from "../../context/DataContext"
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 
 const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "", link, error = null, forgotPass = false }) => {
     // Gets global data from the context
-    const { access, navigate } = useContext(DataContext)
+    const { access, setAccess, refresh, setRefresh, navigate, crud } = useContext(DataContext)
 
 
 
@@ -13,6 +14,37 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
     useEffect(() => {
         if(access) navigate('/')
     }, [access])
+
+
+
+    const handleGoogleLoginSuccess = async (credentialResponse) => {
+        const token = credentialResponse.credential;
+        console.log(token)
+
+        const response = await crud({
+            method: 'post',
+            url: '/api/user/google-login/',
+            body: {
+                token
+            },
+        });
+
+        console.log(response)
+
+        if (response.status === 200) {
+            localStorage.setItem('access', response.data.access);
+            setAccess(response.data.access);
+            localStorage.setItem('refresh', response.data.refresh);
+            setRefresh(response.data.refresh);
+            // navigate('/dashboard');
+        } else {
+            error = 'Google Login failed';
+        }
+    };
+
+    const handleGoogleLoginFailure = () => {
+        error = 'Google Login failed';
+    };
 
 
 
@@ -45,6 +77,18 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
 
                 <button className="btn" type='submit'>{btn}</button>
             </form>
+
+            <div className="or-box">
+                <div className="line"></div>
+                <p>or</p>
+                <div className="line"></div>
+            </div>
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH2}>
+                <GoogleLogin
+                    onSuccess={handleGoogleLoginSuccess}
+                    onError={handleGoogleLoginFailure}
+                />
+            </GoogleOAuthProvider>
 
             <div className="redirect-text">
                 <p>{link.text}</p>

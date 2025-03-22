@@ -1,0 +1,128 @@
+@import url('./variables.less');
+
+@media (max-width: 1200px) {
+    .scan-section {
+        .content {
+            padding: 2.4rem @1colIn;
+        }
+    }
+
+    .secs {
+        .documents {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .section-doc {
+        padding: 9.6rem @1colIn;
+
+        .result-container {
+            .documents-container {
+                flex-direction: column;
+
+                .summary-box {
+                    width: 100%;
+                }
+            }
+        }
+
+        .boxes {
+            flex-direction: column;
+
+
+        }
+    }
+
+    .analysis-box, .assistant-box {
+        width: 100%;
+    }
+
+    .pop-up-overlay {
+        padding: 4.8rem @2colIn;
+    }
+}
+
+@media (max-width: 960px) {
+    :root {
+        --grid-padding: 3.2rem;
+        --grid-columns: 6;
+    }
+
+    .section-doc {
+        padding: 9.6rem @0colIn;
+    }
+
+    .scan-section {
+        .content {
+            padding: 2.4rem @0colIn;
+        }
+    }
+
+    .file-container {
+        .file {
+            .icon {
+                width: 6rem;
+                height: 6rem;
+            }
+        }
+    }
+
+    .pop-up-overlay {
+        padding: 4.8rem @1colIn;
+    }
+}
+
+@media (max-width: 768px) {
+    .scan-section {
+        .content {
+            .uploading {
+                padding: 4.8rem;
+
+                .inside {
+                    .upload-pic {
+                        width: 16rem;
+                        margin: 0 auto;
+                    }
+                }
+            }
+        }
+    }
+
+    .secs {
+        .documents {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+        }
+    }
+
+    .file-container {
+        .file {
+            .title {
+                font-size: 1.6rem;
+            }
+            .icon {
+                width: 4rem;
+                height: 4rem;
+            }
+        }
+    }
+
+    .pop-up-overlay {
+        padding: 4.8rem @0colIn;
+    }
+}
+
+@media (max-width: 660px) {
+    :root {
+        --h1: 3.2rem;
+        --grid-columns: 4;
+        --grid-padding: 1.6rem;
+    }
+
+    .section-main {
+        .text-section {
+            gap: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
+    }
+}

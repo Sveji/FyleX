@@ -23,10 +23,10 @@
 
     z-index: 3;
     align-items: center;
-    padding: 7rem;
 
     .text-section {
         padding-top: 10rem;
+        padding: @0colIn;
         gap: 2.4rem;
         display: flex;
         flex-direction: column;
@@ -36,17 +36,22 @@
         z-index: 90;
 
         .title-section {
-            direction: flex;
+            display: flex;
             flex-direction: column;
             align-items: center;
+            color: #cfcfcf;
 
             z-index: 90;
+
+            .title {
+                color: var(--primary-tint-30);
+            }
         }
 
         .sub-title {
             display: flex;
             align-items: center;
-
+            color: #8b8b8b;
             gap: 0.4rem;
 
             .login {
@@ -68,31 +73,21 @@
     // height: 40rem;
     width: 100%;
     // border: 0.2rem solid red;
-    padding: 1rem;
+    // padding: 1rem;
     z-index: 1;
 
     .content {
-        // height: 30rem;
-        // width: 30rem;
         display: flex;
         justify-content: center;
-        // padding: 1rem;
-        padding: 1rem @2colIn;
-
-
-
-
+        padding: 2.4rem @2colIn;
         z-index: 1;
-        // border: 0.2rem solid aqua;
-
-
 
         .uploading {
             display: flex;
             border: 2px dashed var(--primary-tint-20);
             justify-content: center;
             align-items: center;
-            width: 100vw;
+            width: 100%;
             padding: 12.8rem;
 
             gap: 4rem;

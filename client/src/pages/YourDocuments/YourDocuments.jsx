@@ -1,6 +1,6 @@
 import './yourdocuments.less'
 import Documents from './Documents'
-import Wave from '../../img/Wave.svg'
+import wave from '../../img/Wave.svg'
 import { useContext, useEffect, useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
@@ -8,12 +8,24 @@ import { DataContext } from '../../context/DataContext'
 
 const YourDocuments = () => {
     // Gets global data from the context
-    const { crud, access } = useContext(DataContext)
+    const { crud, access, navigate } = useContext(DataContext)
+
+
+
+    // Checks if user is not logged in
+    useEffect(() => {
+        if(!access) navigate('/login')
+    }, [access])
 
 
 
     // Holds the state for the documents
     const [documents, setDocuments] = useState([])
+
+
+
+    // Holds the error state of the page
+    const [error, setError] = useState(null)
 
 
 
@@ -49,18 +61,21 @@ const YourDocuments = () => {
             const newDocs = documents.filter(doc => doc.id !== docId)
             setDocuments(newDocs)
         }
+        if(response.status == 400) {
+            setError(response.response.data)
+        }
     }
 
 
 
     return (
         <>
-            <img src={Wave} className='wave' />
+            {/* <img src={wave} className='wave' /> */}
             <section className='secs'>
-                <div className='title'>
+                <div className='title-container'>
                     <h1>Your documents</h1>
                     <p>Summarize your documents. Identify suspicious parts and consult with an AI model.</p>
-
+                    {error && <p className="error">{error}</p>}
                 </div>
 
                 <div className='documents'>

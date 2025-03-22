@@ -1,12 +1,15 @@
+@import url('./variables.less');
+
+
 // SCREEN OVERLAY
 .screen-overlay {
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // z-index: 100;
-  // width: 100%;
-  // height: 100%;
-  // background-color: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 
@@ -120,12 +123,17 @@
 
 
 // POP UP
+.pop-up-overlay {
+  padding: 4.8rem @3colIn;
+  overflow: auto;
+}
+
 .pop-up-container {
   animation: scaleUp 0.3s;
   margin: 0 auto;
-  margin-top: 9.6rem;
   border-radius: 3rem;
   position: relative;
+  width: 100%;
 }
 
 .pop-up-closed {
@@ -378,6 +386,7 @@ input {
   gap: 1rem;
   padding: 1.2rem 1.6rem;
   background-color: black;
+  align-items: center;
 
   border-radius: 1.5rem;
 
@@ -397,6 +406,7 @@ input {
           font-size: 2.4rem;
           color: var(--primary-tint-70);
           text-decoration: none;
+
       }
 
       .icon {
@@ -407,10 +417,13 @@ input {
   .close-icon {
     width: 3.2rem;
     height: 3.2rem;
-    position: absolute;
-    top: 50%;
-    right: 1.6rem;
-    transform: translateY(-50%);
+    background-color: black;
+    margin-left: auto;
+    // justify-self: end;
+    // position: absolute;
+    // top: 50%;
+    // right: 1.6rem;
+    // transform: translateY(-50%);
     color: var(--primary-tint-20);
     transition: .2s;
 
@@ -419,4 +432,11 @@ input {
     }
   }
 
+}
+
+
+
+// SECTION
+section {
+  padding-top: 9.6rem;
 }

@@ -18,24 +18,30 @@
 
     padding: 9rem 0;
 
-    gap: 4rem;
+    // gap: 4rem;
     z-index: 1;
     // background-color: red;
 
-    .title {
+    .title-container {
         // gap: 2.4rem;
-        color: var(--primary-tint-30);
+        color: #cfcfcf;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin-bottom: 4.8rem;
+        text-align: center;
+
+        h1 {
+            color: var(--primary-tint-30);
+        }
     }
 
     .documents {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
 
-        padding: 7.6rem @0colIn;
+        padding: 0 @0colIn;
         gap: 3.2rem;
 
         z-index: 2;

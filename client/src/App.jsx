@@ -12,6 +12,7 @@ import ForgotPass from "./pages/ForgotPass/ForgotPass"
 import Nav from "./pages/Nav/Nav"
 import ResetPass from "./pages/ResetPass/ResetPass"
 import DocumentPage from "./pages/DocumentPage/DocumentPage"
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 function App() {
 
@@ -20,32 +21,32 @@ function App() {
 
       <DataProvider>
 
-        <LayoutGrid type='screen' />
+          <LayoutGrid type='screen' />
 
-        <Nav />
+          <Nav />
 
 
-        <Routes>
+          <Routes>
 
-          <Route path="/" element={<Main />}>
+            <Route path="/" element={<Main />}>
 
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
 
-            <Route path="activate-message" element={<EmailMessage title="Activate account" message="Click the link we sent on your email to activate your account. Log in once you're done." />} />
-            <Route path="activate/:uidb/:token" element={<Activate />} />
+              <Route path="activate-message" element={<EmailMessage title="Activate account" message="Click the link we sent on your email to activate your account. Log in once you're done." />} />
+              <Route path="activate/:uidb/:token" element={<Activate />} />
 
-            <Route path="forgot-pass" element={<ForgotPass />} />
-            <Route path="forgot-pass-message" element={<EmailMessage title="Forgot password" message="Click the link we sent on your email to reset your password. Log in once you're done." />} />
-            <Route path="reset-password/:uidb/:token" element={<ResetPass />} />
+              <Route path="forgot-pass" element={<ForgotPass />} />
+              <Route path="forgot-pass-message" element={<EmailMessage title="Forgot password" message="Click the link we sent on your email to reset your password. Log in once you're done." />} />
+              <Route path="reset-password/:uidb/:token" element={<ResetPass />} />
 
-          </Route>
+            </Route>
 
-          <Route path="/highlight" element={<Highlight />} />
-          <Route path="/mydocuments" element={<YourDocuments />} />
-          <Route path="/document/:id" element={<DocumentPage />} />
+            
+            <Route path="/mydocuments" element={<YourDocuments />} />
+            <Route path="/document/:id" element={<DocumentPage />} />
 
-        </Routes>
+          </Routes>
 
       </DataProvider>
 

@@ -7,7 +7,7 @@ const PopUp = ({ children, classes, shown, onClose }) => {
         <ReactModal
             isOpen={shown}
             onRequestClose={onClose}
-            overlayClassName="screen-overlay"
+            overlayClassName="screen-overlay pop-up-overlay"
             closeTimeoutMS={300}
             className={{
                 base: `pop-up-container ${classes}`,

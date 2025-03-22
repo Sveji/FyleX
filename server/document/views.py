@@ -69,11 +69,26 @@ def document(request):
         else:
             return Response("Not the correct status code!", status=status.HTTP_400_BAD_REQUEST)
 
+        url2 = 'http://127.0.0.1:7000/api/service/review'
+
+        data2 = {
+            "url": document_url,
+            "analysis": response_data,
+        }
+        
+        response2 = requests.post(url2, json = data2)
+
+        if response2.status_code == 200:
+            response_data2 = response.json()
+        else:
+            return Response("Status code error!", status=status.HTTP_400_BAD_REQUEST)
+
         document_object = Document.objects.create(
             document = document_url,
             analysis = response_data,
             user = user,
             name = name,
+            review = response_data2,
         )
 
         return Response({
@@ -81,6 +96,7 @@ def document(request):
             "document_url": document_url,
             "analysis": document_object.analysis,
             "name": document_object.name,
+            "review": document_object.review
         }, status=status.HTTP_200_OK)
     
     if request.method == 'DELETE':
@@ -183,45 +199,3 @@ def get_summary(request):
 
         return Response({"message": "Summary retrieved successfully!", "summary": summary}, status=status.HTTP_200_OK)
     
-@api_view(['GET'])
-def get_review(request):
-
-    """
-    view to get the review from the other microservice for a document(checks if the document is yours too)
-    """
-
-    user = request.user
-
-    document_id = request.query_params.get("document_id")
-
-    if not document_id:
-        return Response("Error no document_id!", status=status.HTTP_404_NOT_FOUND)
-    
-    try:
-        document = Document.objects.get(id = document_id)
-        if document.user.id != user.id:
-            return Response("The id is not for the user!", status=status.HTTP_400_BAD_REQUEST)
-    except Document.DoesNotExist:
-        return Response("Error no object found!", status=status.HTTP_400_BAD_REQUEST)
-    
-    url = 'http://127.0.0.1:7000/api/service/review'
-
-    data = {
-        "url": document.document,
-        "analysis": document.analysis,
-    }
-    
-    response = requests.post(url, json = data)
-
-    if response.status_code == 200:
-        response_data = response.json()
-    else:
-        return Response("Starus code error!", status=status.HTTP_400_BAD_REQUEST)
-
-    try:
-        document.review = response_data
-        document.save()
-    except:
-        return Response("Error with the save!", status=status.HTTP_400_BAD_REQUEST)
-
-    return Response(response)
