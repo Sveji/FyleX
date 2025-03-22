@@ -1,0 +1,44 @@
+@import url('../../globalStyling/variables.less');
+
+.navbar {
+    position: fixed;
+    z-index: 69;
+
+    width: 100vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem @0colIn;
+
+    background-color: #000000;
+    filter: drop-shadow(0px -1.5rem 2.5rem rgba(255, 255, 255, 0.25));
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        
+
+        .logo {
+            width: 6rem;
+            height: 6rem;
+        }
+
+        .logo-label {
+            font-size: 2.4rem;
+        }
+    }
+    
+
+    .log {
+        font-size: 2.4rem;
+        text-decoration: none;
+        color: var(--primary-tint-50);
+        // border: solid 3px red;
+
+    }
+
+
+
+}

@@ -9,7 +9,7 @@ import Activate from "./pages/Activate/Activate"
 import Highlight from "./pages/Highlight/Highlight"
 import EmailMessage from "./components/EmailMessage/EmailMessage"
 import ForgotPass from "./pages/ForgotPass/ForgotPass"
-import Nav from "./pages/Nav/Nav"
+import Nav from "./components/Nav/Nav"
 import ResetPass from "./pages/ResetPass/ResetPass"
 import DocumentPage from "./pages/DocumentPage/DocumentPage"
 import { GoogleOAuthProvider } from '@react-oauth/google'
