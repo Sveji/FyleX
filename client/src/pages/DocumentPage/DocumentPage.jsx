@@ -31,18 +31,14 @@ const DocumentPage = () => {
     const [document, setDocument] = useState({})
 
 
-
-    // Stores the analysis
-    const [analysis, setAnalysis] = useState([])
-
     //Stores the url
     const [pdfUrl, setPdfUrl] = useState(null)
 
     //Stores the highlites
-    const [keywords, setKeywords] = useState(null)
+    const [keywords, setKeywords] = useState([])
 
     //Store review response
-    const [review, setReview] = useState(null)
+    const [reviews, setReviews] = useState(null)
 
 
 
@@ -64,36 +60,18 @@ const DocumentPage = () => {
                 method: 'get'
             })
 
-            console.log(response)
-
             if (response.status == 200) {
-                const analysisArr = response.data.analysis.map((text) => {
-                    return text.trim()
-                })
+                const reviewsArr = JSON.parse(`[${response.data.review}]`)
+                setReviews(reviewsArr)
+                setKeywords(reviewsArr.map(review => review['suspicious text'].trim()))
                 setDocument(response.data)
-                setAnalysis(analysisArr)
                 setPdfUrl(response.data.document)
-                setKeywords(analysisArr)
             }
 
             if(response.status == 400) setError(response.response.data)
         }
 
-        const handleGetReviews = async () => {
-            const response = await crud({
-                url: `/api/document/review/?document_id=${id}`,
-                method: 'get'
-            })
-            console.log(response)
-
-            // setReview(response.)
-            // console.log(response.data[0])
-        }
-
-        if (id) {
-            handleGetDocument()
-            handleGetReviews()
-        }
+        if (id) handleGetDocument()
     }, [id])
 
 
@@ -152,7 +130,7 @@ const DocumentPage = () => {
 
                     <div className="boxes">
                         <AnalysisBox
-                            sentences={analysis}
+                            sentences={reviews}
                         />
                         <AssistantBox />
                     </div>
