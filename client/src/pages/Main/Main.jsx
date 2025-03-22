@@ -97,7 +97,7 @@ const Main = () => {
 
             <div className='text-section'>
                 <div className='title-section'>
-                    <h1>Scan documents for fraud</h1>
+                    <h1 className='title'>Scan documents for fraud</h1>
                     <p>Summarize your documents. Identify suspicious parts and consult with an AI model.</p>
 
                     {error && <p className="error">{error}</p>}
@@ -125,13 +125,15 @@ const Main = () => {
                     <div className='uploading' {...getRootProps()}>
                         <input {...getInputProps()} />
                         <div className='inside'>
-                            <img src={Upload} alt="" />
+
+                            <img src={Upload} className='upload-pic' alt="" />
                             <div className='text'>
                                 <div className='container-text'>
                                     <p>Drag and drop</p>
                                     <p className='purple'>your files here</p>
                                 </div>
-                                <p> or</p>
+
+                                <p>or</p>
 
                                 <div className='upload-icon-container'>
                                     <MdOutlineCloudUpload size={32} />
@@ -142,24 +144,7 @@ const Main = () => {
                         </div>
 
                     </div>
-                    {/* <FileUploader
-                        dropMessageStyle={{ backgroundColor: 'red' }}
-                        // style={{
-                        //     border: "2px dashed #916895",
-                        // }}
-                        classes="drop_zone"
-                        multiple={false}
-                        name="file"
-                        type={["pdf", "txt", "docx"]}
-                        handleChange={(file) => setFile(file)}
-                    /> */}
                 </div>
-                {/* <div className='uploaded'>
-                    <p>{file ? `File name: ${file.name}` : 'No file uploaded yet!'}</p>
-                </div>
-                <div className='btn'>
-                    <button cnClick={clearHandler} >Cancel</button>
-                </div> */}
             </div>
 
 
