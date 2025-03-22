@@ -31,18 +31,14 @@ const DocumentPage = () => {
     const [document, setDocument] = useState({})
 
 
-
-    // Stores the analysis
-    const [analysis, setAnalysis] = useState([])
-
     //Stores the url
     const [pdfUrl, setPdfUrl] = useState(null)
 
     //Stores the highlites
-    const [keywords, setKeywords] = useState(null)
+    const [keywords, setKeywords] = useState([])
 
     //Store review response
-    const [review, setReview] = useState(null)
+    const [reviews, setReviews] = useState(null)
 
 
 
@@ -67,33 +63,17 @@ const DocumentPage = () => {
             console.log(response)
 
             if (response.status == 200) {
-                const analysisArr = response.data.analysis.map((text) => {
-                    return text.trim()
-                })
+                const reviewsArr = JSON.parse(`[${response.data.review}]`)
+                setReviews(reviewsArr)
+                setKeywords(reviewsArr.map(review => review['suspicious text'].trim()))
                 setDocument(response.data)
-                setAnalysis(analysisArr)
                 setPdfUrl(response.data.document)
-                setKeywords(analysisArr)
             }
 
             if(response.status == 400) setError(response.response.data)
         }
 
-        const handleGetReviews = async () => {
-            const response = await crud({
-                url: `/api/document/review/?document_id=${id}`,
-                method: 'get'
-            })
-            console.log(response)
-
-            // setReview(response.)
-            // console.log(response.data[0])
-        }
-
-        if (id) {
-            handleGetDocument()
-            handleGetReviews()
-        }
+        if (id) handleGetDocument()
     }, [id])
 
 
@@ -140,19 +120,20 @@ const DocumentPage = () => {
                         </div>
 
                         {
-                            summary &&
+                            true &&
                             <div className="summary-box">
                                 <div className="title-box">
                                     <h1>Summary</h1>
                                 </div>
-                                <p className="summary">{summary}</p>
+                                {/* <p className="summary">{summary}</p> */}
+                                <p className="summary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora fugit minima dolorum exercitationem officia optio maiores magni quas fugiat excepturi? Beatae dolore et enim aliquam debitis cumque corporis ab quis magnam nemo, facere nulla odio. Dolorum dignissimos explicabo velit harum debitis accusantium iste nam quos, repellat ullam ea neque animi ex amet possimus iusto recusandae aperiam, corporis sit. Sit reprehenderit modi deserunt harum numquam quos iste, tempora cupiditate, voluptatibus earum, exercitationem repellat sequi autem ab voluptas molestias natus a reiciendis.</p>
                             </div>
                         }
                     </div>
 
                     <div className="boxes">
                         <AnalysisBox
-                            sentences={analysis}
+                            sentences={reviews}
                         />
                         <AssistantBox />
                     </div>
