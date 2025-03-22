@@ -86,13 +86,7 @@ const AccountForm = ({ handleSubmit, title = "", text = "", inputs = [], btn = "
             <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH2}>
                 <GoogleLogin
                     onSuccess={handleGoogleLoginSuccess}
-                    // onError={handleGoogleLoginFailure}
-                    // onSuccess={credentialResponse => {
-                    //     console.log(credentialResponse);
-                    // }}
-                        onError={() => {
-                        console.log('Login Failed');
-                    }}
+                    onError={handleGoogleLoginFailure}
                 />
             </GoogleOAuthProvider>
 

@@ -60,6 +60,8 @@ const DocumentPage = () => {
                 method: 'get'
             })
 
+            console.log(response)
+
             if (response.status == 200) {
                 const reviewsArr = JSON.parse(`[${response.data.review}]`)
                 setReviews(reviewsArr)
