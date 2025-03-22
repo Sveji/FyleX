@@ -221,9 +221,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/SookX/Menty.svg?style=for-the-badge
-[contributors-url]: https://github.com/SookX/Menty/graphs/contributors
-[license-shield]: https://img.shields.io/github/license/SookX/Menty.svg?style=for-the-badge
-[license-url]: https://github.com/SookX/Menty/blob/master/LICENSE.txt
+[contributors-url]: https://github.com/Sveji/FyleX/graphs/contributors
+[license-shield]: https://img.shields.io/github/license/Sveji/FyleX.svg?style=for-the-badge
+[license-url]: hhttps://github.com/Sveji/FyleX/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
