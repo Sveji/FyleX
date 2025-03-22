@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const Nav = () => {
     // Gets global data from the context
-    const { access, setAccess, setRefresh } = useContext(DataContext)
+    const { navigate, access, setAccess, setRefresh } = useContext(DataContext)
 
 
 

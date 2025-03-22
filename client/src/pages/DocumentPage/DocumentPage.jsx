@@ -63,9 +63,20 @@ const DocumentPage = () => {
             console.log(response)
 
             if (response.status == 200) {
-                const reviewsArr = JSON.parse(`[${response.data.review}]`)
-                setReviews(reviewsArr)
-                setKeywords(reviewsArr.map(review => review['suspicious text'].trim()))
+                const reviewStr = response.data.review.replace(/'/g, '"')
+                const reviewsArr = JSON.parse(reviewStr)
+
+                // Convert into key-value pairs
+                let keyValuePairs = [];
+                for (let i = 0; i < reviewsArr.length; i += 2) {
+                    keyValuePairs.push({
+                        suspicious: reviewsArr[i].trim(),
+                        explanation: reviewsArr[i + 1] ? reviewsArr[i + 1].trim() : ""
+                    })
+                }
+
+                setReviews(keyValuePairs)
+                setKeywords(keyValuePairs.map(review => review['suspicious'].trim()))
                 setDocument(response.data)
                 setPdfUrl(response.data.document)
             }
