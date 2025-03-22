@@ -72,7 +72,7 @@ const YourDocuments = () => {
         <>
             {/* <img src={wave} className='wave' /> */}
             <section className='secs'>
-                <div className='title'>
+                <div className='title-container'>
                     <h1>Your documents</h1>
                     <p>Summarize your documents. Identify suspicious parts and consult with an AI model.</p>
                     {error && <p className="error">{error}</p>}
