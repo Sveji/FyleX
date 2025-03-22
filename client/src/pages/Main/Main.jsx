@@ -65,7 +65,7 @@ const Main = () => {
 
             reader.readAsArrayBuffer(file)
             formData.current.append("document", file)
-            // formData.current.append("name", file.name)
+            formData.current.append("name", file.name)
             formData.current.append("user", access)
             sendFile()
         })

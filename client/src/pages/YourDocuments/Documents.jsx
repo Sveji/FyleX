@@ -12,16 +12,14 @@ const Documents = ({ document, deleteFunc }) => {
 
 
     return (
-        <>
-            <div className="file-container">
-                <div className="file" onClick={() => navigate(`/document/${document.id}`)}>
-                    <LuFileText className="icon" size={32} color={"#000000"} fill={"#7E4F83"} />
-                    <p className="title">{document.name}</p>
-                </div>
-                <IoCloseOutline onClick={deleteFunc} className="close-icon" />
-
+        <div className="file-container">
+            <div className="file" onClick={() => navigate(`/document/${document.id}`)}>
+                <LuFileText className="icon" size={32} color={"#000000"} fill={"#7E4F83"} />
+                <p className="title">{document.name.length > 20 ? document.name.slice(0, 20) + '...' : document.name}</p>
             </div>
-        </>
+            <IoCloseOutline onClick={deleteFunc} className="close-icon" />
+
+        </div>
     )
 }
 

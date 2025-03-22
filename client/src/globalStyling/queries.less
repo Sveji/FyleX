@@ -6,6 +6,12 @@
             padding: 2.4rem @1colIn;
         }
     }
+
+    .secs {
+        .documents {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 }
 
 @media (max-width: 960px) {
@@ -17,6 +23,15 @@
     .scan-section {
         .content {
             padding: 2.4rem @0colIn;
+        }
+    }
+
+    .file-container {
+        .file {
+            .icon {
+                width: 6rem;
+                height: 6rem;
+            }
         }
     }
 }
@@ -34,6 +49,13 @@
                     }
                 }
             }
+        }
+    }
+
+    .secs {
+        .documents {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
         }
     }
 }

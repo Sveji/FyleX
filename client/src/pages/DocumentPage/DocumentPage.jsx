@@ -84,6 +84,7 @@ const DocumentPage = () => {
                 url: `/api/document/review/?document_id=${id}`,
                 method: 'get'
             })
+            console.log(response)
 
             // setReview(response.)
             // console.log(response.data[0])

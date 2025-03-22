@@ -70,7 +70,7 @@ const YourDocuments = () => {
 
     return (
         <>
-            <img src={wave} className='wave' />
+            {/* <img src={wave} className='wave' /> */}
             <section className='secs'>
                 <div className='title'>
                     <h1>Your documents</h1>

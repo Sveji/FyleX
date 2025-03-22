@@ -216,7 +216,7 @@ def get_review(request):
     if response.status_code == 200:
         response_data = response.json()
     else:
-        return Response("Starus code error!", status=status.HTTP_400_BAD_REQUEST)
+        return Response("Status code error!", status=status.HTTP_400_BAD_REQUEST)
 
     try:
         document.review = response_data
@@ -224,4 +224,4 @@ def get_review(request):
     except:
         return Response("Error with the save!", status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(response)
+    return Response(f'[{response_data}]')
